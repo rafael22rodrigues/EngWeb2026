@@ -1,0 +1,100 @@
+extends layout
+
+block content
+    .w3-card-4
+        header.w3-container.w3-purple
+            h1 Estatísticas dos Exames
+
+        .w3-container.w3-padding-16
+            //- Cards de resumo
+            .w3-row-padding
+                .w3-third
+                    .w3-card.w3-padding.w3-center
+                        h4 Total
+                        h1= stats.total
+
+                .w3-third
+                    .w3-card.w3-padding.w3-center
+                        h4 Federados
+                        h1= stats.federado.sim
+
+                .w3-third
+                    .w3-card.w3-padding.w3-center
+                        h4 Aprovados
+                        h1= stats.resultado.aprovado
+
+            hr
+
+            //- Tabelas de distribuição
+            h3 Distribuição por Sexo
+            table.w3-table.w3-striped.w3-margin-bottom
+                tr
+                    th Sexo
+                    th Quantidade
+                    th Percentagem
+                tr
+                    td Masculino
+                    td= stats.sexo.masculino
+                    td= ((stats.sexo.masculino / stats.total) * 100).toFixed(1) + '%'
+                tr
+                    td Feminino
+                    td= stats.sexo.feminino
+                    td= ((stats.sexo.feminino / stats.total) * 100).toFixed(1) + '%'
+
+            h3 Distribuição por Federado
+            table.w3-table.w3-striped.w3-margin-bottom
+                tr
+                    th Federado
+                    th Quantidade
+                    th Percentagem
+                tr
+                    td Sim
+                    td= stats.federado.sim
+                    td= ((stats.federado.sim / stats.total) * 100).toFixed(1) + '%'
+                tr
+                    td Não
+                    td= stats.federado.nao
+                    td= ((stats.federado.nao / stats.total) * 100).toFixed(1) + '%'
+
+            h3 Distribuição por Resultado
+            table.w3-table.w3-striped.w3-margin-bottom
+                tr
+                    th Resultado
+                    th Quantidade
+                    th Percentagem
+                tr
+                    td Aprovado
+                    td= stats.resultado.aprovado
+                    td= ((stats.resultado.aprovado / stats.total) * 100).toFixed(1) + '%'
+                tr
+                    td Reprovado
+                    td= stats.resultado.reprovado
+                    td= ((stats.resultado.reprovado / stats.total) * 100).toFixed(1) + '%'
+
+            h3 Distribuição por Modalidade
+            table.w3-table.w3-striped.w3-margin-bottom
+                tr
+                    th Modalidade
+                    th Quantidade
+                    th Percentagem
+                each m in stats.modalidade
+                    tr
+                        td= m.modalidade
+                        td= m.tamanho
+                        td= ((m.tamanho / stats.total) * 100).toFixed(1) + '%'
+
+            h3 Distribuição por Clubes
+            table.w3-table.w3-striped.w3-margin-bottom
+                tr
+                    th Clube
+                    th Quantidade
+                    th Percentagem
+                each c in stats.clube
+                    tr
+                        td= c.clube
+                        td= c.tamanho
+                        td= ((c.tamanho / stats.total) * 100).toFixed(1) + '%'
+
+
+
+            a.w3-btn.w3-purple.w3-round(href="/emd") Voltar

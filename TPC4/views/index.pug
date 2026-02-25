@@ -1,0 +1,33 @@
+extends layout
+
+block content
+    .w3-card-4
+        header.w3-container.w3-teal
+            h1 Exames Médicos Desportivos
+                a.w3-btn.w3-round.w3-grey(href="/emd/registo") +
+
+        .w3-container
+
+            .w3-bar.w3-margin-top.w3-margin-bottom(style="display: flex; justify-content: space-between; align-items: center;")
+                a.w3-btn.w3-round.w3-green(href="/emd/stats") 📊 Estatísticas
+                div(style="display: flex; gap: 10px;")
+                    a.w3-btn.w3-round.w3-blue-grey(href="/emd?_sort=data&_ord=desc") Ordenar por Data ↓
+                    a.w3-btn.w3-round.w3-blue-grey(href="/emd?_nome=&_ord=asc") Ordenar por Nome ↑
+                    a.w3-btn.w3-round.w3-grey(href="/emd") Voltar à Ordem Original
+
+            table.w3-table-all.w3-margin-top
+                tr
+                    th Nome
+                    th Data
+                    th Modalidade
+                    th Resultado
+                    th Opções
+                each e in list
+                    tr
+                        td: a(href=`/emd/${e.id}`)= e.nome
+                        td= e.data
+                        td= e.modalidade
+                        td= e.resultado
+                        td
+                            a.w3-btn.w3-round.w3-blue-grey.w3-small(href=`/emd/editar/${e.id}`) Editar
+                            a.w3-btn.w3-round.w3-red.w3-small.w3-margin-left(href=`/emd/apagar/${e.id}`) Apagar

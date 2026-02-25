@@ -1,0 +1,44 @@
+
+extends layout
+
+block content
+    - var titulo = `Exame de ${e.nome}`
+    .w3-card-4
+        header.w3-container.w3-teal
+            h1= titulo
+
+        .w3-container
+            table.w3-table-all.w3-margin-top
+                tr
+                    th Nome
+                    td= e.nome
+                tr
+                    th Data
+                    td= e.data
+                tr
+                    th Idade
+                    td= e.idade
+                tr
+                    th Sexo
+                    td= e.genero
+                tr
+                    th Morada
+                    td= e.morada
+                tr
+                    th Modalidade
+                    td= e.modalidade
+                tr
+                    th Clube
+                    td= e.clube
+                tr
+                    th Email
+                    td= e.email
+                tr
+                    th Federado
+                    td= e.federado
+                tr
+                    th Resultado
+                    td= e.resultado
+
+            //- BOTÃO CORRIGO - DENTRO DO .w3-container
+            a.w3-btn.w3-grey.w3-margin-top.w3-margin-left(href="/") Voltar

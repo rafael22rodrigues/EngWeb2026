@@ -1,0 +1,98 @@
+extends layout
+
+block content
+    .w3-card-4
+        header.w3-container.w3-purple
+            h2= exame ? "Edit Exam Record" : "New Exam Record"
+
+        form.w3-container.w3-padding-16(method="POST" action=exame ? `/emd/${exame.id}` : "/emd")
+            fieldset
+                legend Metadata
+                if exame
+                    input(type="hidden" name="id" value=exame.id)
+
+                label Data
+                input.w3-input.w3-round(type="text" name="data" value=exame ? exame.data : "")
+
+                label Nome
+                input.w3-input.w3-round(type="text" name="nome" value=exame ? exame.nome : "")
+
+                label Idade
+                input.w3-input.w3-round(type="text" name="idade" value=exame ? exame.idade : "")
+
+                label Sexo
+                .w3-row-padding
+                    label.w3-third
+                        input.w3-radio(
+                            type="radio"
+                            name="genero"
+                            value="M"
+                            checked=(exame && exame.genero === "M")
+                        )
+                        |  M
+
+                    label.w3-third
+                        input.w3-radio(
+                            type="radio"
+                            name="genero"
+                            value="F"
+                            checked=(exame && exame.genero === "F")
+                        )
+                        |  F
+
+                label Morada
+                input.w3-input.w3-round(type="text" name="morada" value=exame ? exame.morada : "")
+
+                label Modalidade
+                input.w3-input.w3-round(type="text" name="modalidade" value=exame ? exame.modalidade : "")
+
+                label Clube
+                input.w3-input.w3-round(type="text" name="clube" value=exame ? exame.clube : "")
+
+                label Email
+                input.w3-input.w3-round(type="text" name="email" value=exame ? exame.email : "")
+
+                //- Federado - com mesmo nome e labels corretas
+                label Federado
+                .w3-row-padding
+                    label.w3-third
+                        input.w3-radio(
+                            type="radio"
+                            name="federado"
+                            value="Sim"
+                            checked=(exame && exame.federado === "Sim")
+                        )
+                        |  Sim
+
+                    label.w3-third
+                        input.w3-radio(
+                            type="radio"
+                            name="federado"
+                            value="Não"
+                            checked=(exame && exame.federado === "Não")
+                        )
+                        |  Não
+
+                //- Resultado - com labels corretas
+                label Resultado
+                .w3-row-padding
+                    label.w3-third
+                        input.w3-radio(
+                            type="radio"
+                            name="resultado"
+                            value="Aprovado"
+                            checked=(exame && exame.resultado === "Aprovado")
+                        )
+                        |  Aprovado
+
+                    label.w3-third
+                        input.w3-radio(
+                            type="radio"
+                            name="resultado"
+                            value="Rejeitado"
+                            checked=(exame && exame.resultado === "Rejeitado")
+                        )
+                        |  Rejeitado
+
+            button.w3-btn.w3-purple.w3-margin-top(type="submit" onclick="window.location.href='/emd'")= exame ? "Update" : "Insert"
+            a.w3-btn.w3-grey.w3-margin-top.w3-margin-left(href="/") Cancel
