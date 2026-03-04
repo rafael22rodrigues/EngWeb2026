@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  .w3-card-4 <!-- div -->
+    header.w3-container.w3-red
+      h1 Filmes em Cartaz
+
+    .w3-container
+      table.w3-table-all.w3-margin-top
+        tr
+          th ID
+          th Título
+          th Ano
+          th #Género
+          th #Elenco
+        each t in list
+          tr(onclick=`window.location='/filmes/${t.id}'` style='cursor:pointer' onmouseover="this.style.backgroundColor='#ff7f7f';" onmouseout="this.style.backgroundColor='';")
+            td= t.id
+            td= t.title
+            td= t.year
+            td= t.genres.length
+            td= t.cast.length

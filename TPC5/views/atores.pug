@@ -1,0 +1,19 @@
+extends layout
+
+block content
+    .w3-card-4 <!-- div -->
+        header.w3-container.w3-blue
+            h1 Atores
+        .w3-container
+            table.w3-table-all.w3-margin-top
+                tr
+                    th ID
+                    th Nome
+                    th #Filmes
+                each a in atores
+                    tr(onclick=`window.location='/atores/${a.id}'` style='cursor:pointer' onmouseover="this.style.backgroundColor='#89cff0';" onmouseout="this.style.backgroundColor='';")
+                        td= a.id
+                        td= a.nome
+                        td= a["#filmes"]
+        footer
+            a.w3-btn.w3-blue.w3-margin(href="/") Voltar

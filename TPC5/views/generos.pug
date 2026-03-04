@@ -1,0 +1,19 @@
+extends layout
+
+block content
+    .w3-card-4 <!-- div -->
+        header.w3-container.w3-green
+            h1 Géneros de Filmes
+        .w3-container
+            table.w3-table-all.w3-margin-top
+                tr
+                    th ID
+                    th Nome
+                    th #Filmes
+                each g in generos
+                    tr(onclick=`window.location='/generos/${g.id}'` style='cursor:pointer' onmouseover="this.style.backgroundColor='#00ff7f';" onmouseout="this.style.backgroundColor='';")
+                        td= g.id
+                        td= g.nome
+                        td= g["#filmes"]
+        footer
+            a.w3-btn.w3-green.w3-margin(href="/") Voltar
