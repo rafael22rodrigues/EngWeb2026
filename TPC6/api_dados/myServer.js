@@ -108,7 +108,33 @@ app.get('/filmes/:id', async (req, res) => {
     try {
         const filme = await Filme.findById(decodeURIComponent(req.params.id));
         if (!filme) return res.status(404).json({ error: "Não encontrado" });
-        res.json(filme);
+        const lista_atores = filme.cast;
+        var resultados_atores= []
+        for (const i of lista_atores) {
+            const id_ator = await Ator.findOne({
+                nome: i
+            }).select('_id');
+            resultados_atores.push({
+                nome: i,
+                id: id_ator ? id_ator._id : null
+            });
+        }
+        const lista_generos = filme.genres;
+        var resultados_generos= []
+        for (const i of lista_generos) {
+            const id_genero = await Genero.findOne({
+                nome: i
+            }).select('_id');
+            resultados_generos.push({
+                nome: i,
+                id: id_genero ? id_genero._id : null
+            });
+        }
+        res.json({
+            filme: filme,
+            atores: resultados_atores,
+            generos: resultados_generos
+        });
     } catch (err) {
         res.status(400).json({ error: "ID inválido ou erro de sistema" });
     }
@@ -176,7 +202,23 @@ app.get('/atores/:id', async (req, res) => {
     try {
         const ator = await Ator.findById(decodeURIComponent(req.params.id));
         if (!ator) return res.status(404).json({ error: "Não encontrado" });
-        res.json(ator);
+        const lista_filmes = ator.filmes;
+        var resultados_filmes = []
+        for (const i of lista_filmes) {
+            const id_filme = await Filme.findOne({
+                title: i.title,
+                year: i.year
+            }).select('_id');
+            resultados_filmes.push({
+                title: i.title,
+                year: i.year,
+                id: id_filme ? id_filme._id : null
+            });
+        }
+        res.json({
+            ator: ator,
+            filmes: resultados_filmes,
+        });
     } catch (err) {
         res.status(400).json({ error: "ID inválido ou erro de sistema" });
     }
@@ -243,7 +285,23 @@ app.get('/generos/:id', async (req, res) => {
     try {
         const genero = await Genero.findById(decodeURIComponent(req.params.id));
         if (!genero) return res.status(404).json({ error: "Não encontrado" });
-        res.json(genero);
+        const lista_filmes = genero.filmes;
+        var resultados_filmes = []
+        for (const i of lista_filmes) {
+            const id_filme = await Filme.findOne({
+                title: i.title,
+                year: i.year
+            }).select('_id');
+            resultados_filmes.push({
+                title: i.title,
+                year: i.year,
+                id: id_filme ? id_filme._id : null
+            });
+        }
+        res.json({
+            genero: genero,
+            filmes: resultados_filmes,
+        });
     } catch (err) {
         res.status(400).json({ error: "ID inválido ou erro de sistema" });
     }

@@ -3,26 +3,32 @@ extends layout
 block content
     .w3-card-4 <!-- div -->
         header.w3-container.w3-red
-            h1 #{filme.title} (#{filme.year})
-        - const elenco = filme.cast.length;
-        - const genero = filme.genres.length;
+            h1 #{filme.filme.title} (#{filme.filme.year})
+        - const elenco = filme.atores.length;
+        - const genero = filme.generos.length;
         .w3-container
             table.w3-table-all.w3-margin-top
                 tr
                     th(style="background-color: #f0f0f0;") Título
-                    td(style="background-color: white;")= filme.title
+                    td(style="background-color: white;")= filme.filme.title
                 tr
                     th(style="background-color: #f0f0f0;") Ano
-                    td(style="background-color: white;")= filme.year
+                    td(style="background-color: white;")= filme.filme.year
                 tr
                     th(rowspan=elenco + 1 style="background-color: #f0f0f0;") Elenco
-                    each e in filme.cast
-                        tr
-                            td(style="background-color: white;")= e
+                    each e in filme.atores
+                        tr(onclick=`window.location='/atores/${e.id}'`
+                            style='cursor: pointer;'
+                            onmouseover="this.style.backgroundColor='#ff7f7f'; this.querySelector('td').style.backgroundColor='#ff7f7f';"
+                            onmouseout="this.style.backgroundColor=''; this.querySelector('td').style.backgroundColor='white';")
+                            td(style="background-color: white;")= e.nome
                 tr
                     th(rowspan=genero + 1 style="background-color: #f0f0f0;") Género(s)
-                    each g in filme.genres
-                        tr
-                            td(style="background-color: white;")= g
+                    each g in filme.generos
+                        tr(onclick=`window.location='/generos/${g.id}'`
+                            style='cursor: pointer;'
+                            onmouseover="this.style.backgroundColor='#ff7f7f'; this.querySelector('td').style.backgroundColor='#ff7f7f';"
+                            onmouseout="this.style.backgroundColor=''; this.querySelector('td').style.backgroundColor='white';")
+                            td(style="background-color: white;")= g.nome
         footer
             a.w3-btn.w3-red.w3-margin(href="/filmes") Voltar
