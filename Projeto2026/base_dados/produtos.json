@@ -1,0 +1,1770 @@
+[
+  {
+    "_id": "jarra-caixa",
+    "nome": "Jarra Caixa",
+    "categoriaId": "jarras",
+    "imagemBase": "jarras/jarra-caixa-ouro-marmore.jpeg",
+    "opcoes": {
+      "cores": [
+        {
+          "_id": "#BDB8A4",
+          "label": "Ouro Mármore",
+          "imagem": "jarras/jarra-caixa-ouro-marmore.jpeg"
+        },
+        {
+          "_id": "#C4BC9B",
+          "label": "Bege",
+          "imagem": "jarras/jarra-caixa-bege.jpeg"
+        },
+        {
+          "_id": "#E8E4D3",
+          "label": "Ouro Branco",
+          "imagem": "jarras/jarra-caixa-ouro-branco.jpeg"
+        },
+        {
+          "_id": "#FFF2BA",
+          "label": "Ouro Bege",
+          "imagem": "jarras/jarra-caixa-ouro-bege.jpeg"
+        }
+      ],
+      "tamanhos": [
+        "Pequeno",
+        "Grande"
+      ],
+      "tampas": [
+        "Ramo"
+      ]
+    },
+    "variantes": [
+      {
+        "sku": "PT6331-OURO-MARMORE-P",
+        "preco": 26.0,
+        "vendidos": 0,
+        "stock": 4,
+        "atributos": {
+          "cor": "#BDB8A4",
+          "tamanho": "Pequeno",
+          "tampa": "Ramo"
+        }
+      },
+      {
+        "sku": "PT6330-OURO-MARMORE-G",
+        "preco": 28.0,
+        "vendidos": 0,
+        "stock": 8,
+        "atributos": {
+          "cor": "#BDB8A4",
+          "tamanho": "Grande",
+          "tampa": "Ramo"
+        }
+      },
+      {
+        "sku": "PT6331-BEGE-P",
+        "preco": 26.0,
+        "vendidos": 0,
+        "stock": 4,
+        "atributos": {
+          "cor": "#C4BC9B",
+          "tamanho": "Pequeno",
+          "tampa": "Ramo"
+        }
+      },
+      {
+        "sku": "PT6330-BEGE-G",
+        "preco": 28.0,
+        "vendidos": 0,
+        "stock": 8,
+        "atributos": {
+          "cor": "#C4BC9B",
+          "tamanho": "Grande",
+          "tampa": "Ramo"
+        }
+      },
+      {
+        "sku": "PT6331-OURO-BRANCO-P",
+        "preco": 26.0,
+        "vendidos": 0,
+        "stock": 4,
+        "atributos": {
+          "cor": "#E8E4D3",
+          "tamanho": "Pequeno",
+          "tampa": "Ramo"
+        }
+      },
+      {
+        "sku": "PT6330-OURO-BRANCO-G",
+        "preco": 28.0,
+        "vendidos": 0,
+        "stock": 8,
+        "atributos": {
+          "cor": "#E8E4D3",
+          "tamanho": "Grande",
+          "tampa": "Ramo"
+        }
+      },
+      {
+        "sku": "PT6331-OURO-BEGE-P",
+        "preco": 26.0,
+        "vendidos": 0,
+        "stock": 4,
+        "atributos": {
+          "cor": "#FFF2BA",
+          "tamanho": "Pequeno",
+          "tampa": "Ramo"
+        }
+      },
+      {
+        "sku": "PT6330-OURO-BEGE-G",
+        "preco": 28.0,
+        "vendidos": 0,
+        "stock": 8,
+        "atributos": {
+          "cor": "#FFF2BA",
+          "tamanho": "Grande",
+          "tampa": "Ramo"
+        }
+      }
+    ]
+  },
+  {
+    "_id": "jarra-cilindro",
+    "nome": "Jarra Cilindro",
+    "categoriaId": "jarras",
+    "imagemBase": "jarras/jarra-cilindro-ouro-marmore.jpeg",
+    "opcoes": {
+      "cores": [
+        {
+          "_id": "#BDB8A4",
+          "label": "Ouro Mármore",
+          "imagem": "jarras/jarra-cilindro-ouro-marmore.jpeg"
+        },
+        {
+          "_id": "#C4BC9B",
+          "label": "Bege",
+          "imagem": "jarras/jarra-cilindro-bege.jpeg"
+        },
+        {
+          "_id": "#E8E4D3",
+          "label": "Ouro Branco",
+          "imagem": "jarras/jarra-cilindro-ouro-branco.jpeg"
+        },
+        {
+          "_id": "#FFF2BA",
+          "label": "Ouro Bege",
+          "imagem": "jarras/jarra-cilindro-ouro-bege.jpeg"
+        }
+      ],
+      "tamanhos": [
+        "Pequeno",
+        "Grande"
+      ],
+      "tampas": [
+        "Ramo"
+      ]
+    },
+    "variantes": [
+      {
+        "sku": "PT6329-OURO-MARMORE-P",
+        "preco": 31.0,
+        "vendidos": 0,
+        "stock": 4,
+        "atributos": {
+          "cor": "#BDB8A4",
+          "tamanho": "Pequeno",
+          "tampa": "Ramo"
+        }
+      },
+      {
+        "sku": "PT6328-OURO-MARMORE-G",
+        "preco": 38.0,
+        "vendidos": 0,
+        "stock": 8,
+        "atributos": {
+          "cor": "#BDB8A4",
+          "tamanho": "Grande",
+          "tampa": "Ramo"
+        }
+      },
+      {
+        "sku": "PT6329-BEGE-P",
+        "preco": 31.0,
+        "vendidos": 0,
+        "stock": 4,
+        "atributos": {
+          "cor": "#C4BC9B",
+          "tamanho": "Pequeno",
+          "tampa": "Ramo"
+        }
+      },
+      {
+        "sku": "PT6328-BEGE-G",
+        "preco": 38.0,
+        "vendidos": 0,
+        "stock": 8,
+        "atributos": {
+          "cor": "#C4BC9B",
+          "tamanho": "Grande",
+          "tampa": "Ramo"
+        }
+      },
+      {
+        "sku": "PT6329-OURO-BRANCO-P",
+        "preco": 31.0,
+        "vendidos": 0,
+        "stock": 4,
+        "atributos": {
+          "cor": "#E8E4D3",
+          "tamanho": "Pequeno",
+          "tampa": "Ramo"
+        }
+      },
+      {
+        "sku": "PT6328-OURO-BRANCO-G",
+        "preco": 38.0,
+        "vendidos": 0,
+        "stock": 8,
+        "atributos": {
+          "cor": "#E8E4D3",
+          "tamanho": "Grande",
+          "tampa": "Ramo"
+        }
+      },
+      {
+        "sku": "PT6329-OURO-BEGE-P",
+        "preco": 31.0,
+        "vendidos": 0,
+        "stock": 4,
+        "atributos": {
+          "cor": "#FFF2BA",
+          "tamanho": "Pequeno",
+          "tampa": "Ramo"
+        }
+      },
+      {
+        "sku": "PT6328-OURO-BEGE-G",
+        "preco": 38.0,
+        "vendidos": 0,
+        "stock": 8,
+        "atributos": {
+          "cor": "#FFF2BA",
+          "tamanho": "Grande",
+          "tampa": "Ramo"
+        }
+      }
+    ]
+  },
+  {
+    "_id": "jarra-bola",
+    "nome": "Jarra Bola",
+    "categoriaId": "jarras",
+    "imagemBase": "jarras/jarra-bola-ouro-marmore.jpeg",
+    "opcoes": {
+      "cores": [
+        {
+          "_id": "#BDB8A4",
+          "label": "Ouro Mármore",
+          "imagem": "jarras/jarra-bola-ouro-marmore.jpeg"
+        }
+      ],
+      "tamanhos": [
+        "Pequeno",
+        "Grande"
+      ],
+      "tampas": [
+        "Bola"
+      ]
+    },
+    "variantes": [
+      {
+        "sku": "PL1144C",
+        "preco": 17.0,
+        "vendidos": 0,
+        "stock": 4,
+        "atributos": {
+          "cor": "#BDB8A4",
+          "tamanho": "Pequeno",
+          "tampa": "Bola"
+        }
+      },
+      {
+        "sku": "PL1143C",
+        "preco": 22.0,
+        "vendidos": 0,
+        "stock": 8,
+        "atributos": {
+          "cor": "#BDB8A4",
+          "tamanho": "Grande",
+          "tampa": "Bola"
+        }
+      }
+    ]
+  },
+  {
+    "_id": "jarra-risca",
+    "nome": "Jarra Risca",
+    "categoriaId": "jarras",
+    "imagemBase": "jarras/jarra-risca-ouro-marmore.jpeg",
+    "opcoes": {
+      "cores": [
+        {
+          "_id": "#BDB8A4",
+          "label": "Ouro Mármore",
+          "imagem": "jarras/jarra-risca-ouro-marmore.jpeg"
+        },
+        {
+          "_id": "#E8E4D3",
+          "label": "Ouro Branco",
+          "imagem": "jarras/jarra-risca-ouro-branco.jpeg"
+        }
+      ],
+      "tamanhos": [
+        "Pequeno",
+        "Grande"
+      ],
+      "tampas": []
+    },
+    "variantes": [
+      {
+        "sku": "PL319C-OURO-MARMORE-P",
+        "preco": 20.0,
+        "vendidos": 0,
+        "stock": 4,
+        "atributos": {
+          "cor": "#BDB8A4",
+          "tamanho": "Pequeno"
+        }
+      },
+      {
+        "sku": "PL320C-OURO-MARMORE-G",
+        "preco": 25.0,
+        "vendidos": 0,
+        "stock": 8,
+        "atributos": {
+          "cor": "#BDB8A4",
+          "tamanho": "Grande"
+        }
+      },
+      {
+        "sku": "PL319C-OURO-BRANCO-P",
+        "preco": 20.0,
+        "vendidos": 0,
+        "stock": 4,
+        "atributos": {
+          "cor": "#E8E4D3",
+          "tamanho": "Pequeno"
+        }
+      },
+      {
+        "sku": "PL320C-OURO-BRANCO-G",
+        "preco": 25.0,
+        "vendidos": 0,
+        "stock": 8,
+        "atributos": {
+          "cor": "#E8E4D3",
+          "tamanho": "Grande"
+        }
+      }
+    ]
+  },
+  {
+    "_id": "jarra-oval",
+    "nome": "Jarra Oval",
+    "categoriaId": "jarras",
+    "imagemBase": "jarras/jarra-oval-ouro-marmore.jpeg",
+    "opcoes": {
+      "cores": [
+        {
+          "_id": "#BDB8A4",
+          "label": "Ouro Mármore",
+          "imagem": "jarras/jarra-oval-ouro-marmore.jpeg"
+        },
+        {
+          "_id": "#4F7942",
+          "label": "Verde",
+          "imagem": "jarras/jarra-oval-verde.jpeg"
+        },
+        {
+          "_id": "#D4AF37",
+          "label": "Dourado",
+          "imagem": "jarras/jarra-oval-dourado.jpeg"
+        },
+        {
+          "_id": "#C4BC9B",
+          "label": "Bege",
+          "imagem": "jarras/jarra-oval-bege.jpeg"
+        },
+        {
+          "_id": "#40E0D0",
+          "label": "Turquesa",
+          "imagem": "jarras/jarra-oval-turquesa.jpeg"
+        }
+      ],
+      "tamanhos": [
+        "Pequeno",
+        "Grande"
+      ],
+      "tampas": [
+        "Amendoa"
+      ]
+    },
+    "variantes": [
+      {
+        "sku": "PL312B-OURO-MARMORE-P",
+        "preco": 29.0,
+        "vendidos": 0,
+        "stock": 4,
+        "atributos": {
+          "cor": "#BDB8A4",
+          "tamanho": "Pequeno",
+          "tampa": "Amendoa"
+        }
+      },
+      {
+        "sku": "PL313B-OURO-MARMORE-G",
+        "preco": 39.0,
+        "vendidos": 0,
+        "stock": 8,
+        "atributos": {
+          "cor": "#BDB8A4",
+          "tamanho": "Grande",
+          "tampa": "Amendoa"
+        }
+      },
+      {
+        "sku": "PL312B-VERDE-P",
+        "preco": 29.0,
+        "vendidos": 0,
+        "stock": 4,
+        "atributos": {
+          "cor": "#4F7942",
+          "tamanho": "Pequeno",
+          "tampa": "Amendoa"
+        }
+      },
+      {
+        "sku": "PL313B-VERDE-G",
+        "preco": 39.0,
+        "vendidos": 0,
+        "stock": 8,
+        "atributos": {
+          "cor": "#4F7942",
+          "tamanho": "Grande",
+          "tampa": "Amendoa"
+        }
+      },
+      {
+        "sku": "PL312B-DOURADO-P",
+        "preco": 29.0,
+        "vendidos": 0,
+        "stock": 4,
+        "atributos": {
+          "cor": "#D4AF37",
+          "tamanho": "Pequeno",
+          "tampa": "Amendoa"
+        }
+      },
+      {
+        "sku": "PL313B-DOURADO-G",
+        "preco": 39.0,
+        "vendidos": 0,
+        "stock": 8,
+        "atributos": {
+          "cor": "#D4AF37",
+          "tamanho": "Grande",
+          "tampa": "Amendoa"
+        }
+      },
+      {
+        "sku": "PL312B-BEGE-P",
+        "preco": 29.0,
+        "vendidos": 0,
+        "stock": 4,
+        "atributos": {
+          "cor": "#C4BC9B",
+          "tamanho": "Pequeno",
+          "tampa": "Amendoa"
+        }
+      },
+      {
+        "sku": "PL313B-BEGE-G",
+        "preco": 39.0,
+        "vendidos": 0,
+        "stock": 8,
+        "atributos": {
+          "cor": "#C4BC9B",
+          "tamanho": "Grande",
+          "tampa": "Amendoa"
+        }
+      },
+      {
+        "sku": "PL312B-TURQUESA-P",
+        "preco": 29.0,
+        "vendidos": 0,
+        "stock": 4,
+        "atributos": {
+          "cor": "#40E0D0",
+          "tamanho": "Pequeno",
+          "tampa": "Amendoa"
+        }
+      },
+      {
+        "sku": "PL313B-TURQUESA-G",
+        "preco": 39.0,
+        "vendidos": 0,
+        "stock": 8,
+        "atributos": {
+          "cor": "#40E0D0",
+          "tamanho": "Grande",
+          "tampa": "Amendoa"
+        }
+      }
+    ]
+  },
+  {
+    "_id": "jarra-roma",
+    "nome": "Jarra Roma",
+    "categoriaId": "jarras",
+    "imagemBase": "jarras/jarra-roma-turquesa.jpeg",
+    "opcoes": {
+      "cores": [
+        {
+          "_id": "#40E0D0",
+          "label": "Turquesa",
+          "imagem": "jarras/jarra-roma-turquesa.jpeg"
+        },
+        {
+          "_id": "#ADD8E6",
+          "label": "Azul Claro",
+          "imagem": "jarras/jarra-roma-azul-claro.jpeg"
+        },
+        {
+          "_id": "#FFFFFF",
+          "label": "Branco",
+          "imagem": "jarras/jarra-roma-branco.jpeg"
+        }
+      ],
+      "tamanhos": [
+        "Pequeno",
+        "Grande"
+      ],
+      "tampas": [
+        "Amendoa"
+      ]
+    },
+    "variantes": [
+      {
+        "sku": "TAF2633C-TURQUESA-P",
+        "preco": 9.0,
+        "vendidos": 0,
+        "stock": 4,
+        "atributos": {
+          "cor": "#40E0D0",
+          "tamanho": "Pequeno",
+          "tampa": "Amendoa"
+        }
+      },
+      {
+        "sku": "TAF2640C-TURQUESA-G",
+        "preco": 11.0,
+        "vendidos": 0,
+        "stock": 8,
+        "atributos": {
+          "cor": "#40E0D0",
+          "tamanho": "Grande",
+          "tampa": "Amendoa"
+        }
+      },
+      {
+        "sku": "TAF2633C-AZUL-CLARO-P",
+        "preco": 9.0,
+        "vendidos": 0,
+        "stock": 4,
+        "atributos": {
+          "cor": "#ADD8E6",
+          "tamanho": "Pequeno",
+          "tampa": "Amendoa"
+        }
+      },
+      {
+        "sku": "TAF2640C-AZUL-CLARO-G",
+        "preco": 11.0,
+        "vendidos": 0,
+        "stock": 8,
+        "atributos": {
+          "cor": "#ADD8E6",
+          "tamanho": "Grande",
+          "tampa": "Amendoa"
+        }
+      },
+      {
+        "sku": "TAF2633C-BRANCO-P",
+        "preco": 9.0,
+        "vendidos": 0,
+        "stock": 4,
+        "atributos": {
+          "cor": "#FFFFFF",
+          "tamanho": "Pequeno",
+          "tampa": "Amendoa"
+        }
+      },
+      {
+        "sku": "TAF2640C-BRANCO-G",
+        "preco": 11.0,
+        "vendidos": 0,
+        "stock": 8,
+        "atributos": {
+          "cor": "#FFFFFF",
+          "tamanho": "Grande",
+          "tampa": "Amendoa"
+        }
+      }
+    ]
+  },
+  {
+    "_id": "jarra-primavera",
+    "nome": "Jarra Primavera",
+    "categoriaId": "jarras",
+    "imagemBase": "jarras/jarra-primavera-branco.jpeg",
+    "opcoes": {
+      "cores": [
+        {
+          "_id": "#FFFFFF",
+          "label": "Branco",
+          "imagem": "jarras/jarra-primavera-branco.jpeg"
+        }
+      ],
+      "tamanhos": [
+        "Pequeno",
+        "Grande"
+      ],
+      "tampas": []
+    },
+    "variantes": [
+      {
+        "sku": "TRRTG28002",
+        "preco": 21.0,
+        "vendidos": 0,
+        "stock": 4,
+        "atributos": {
+          "cor": "#FFFFFF",
+          "tamanho": "Pequeno"
+        }
+      },
+      {
+        "sku": "TRRTG38002",
+        "preco": 27.0,
+        "vendidos": 0,
+        "stock": 8,
+        "atributos": {
+          "cor": "#FFFFFF",
+          "tamanho": "Grande"
+        }
+      }
+    ]
+  },
+  {
+    "_id": "jarra-ondas",
+    "nome": "Jarra Ondas",
+    "categoriaId": "jarras",
+    "imagemBase": "jarras/jarra-ondas-meia-noite.jpeg",
+    "opcoes": {
+      "cores": [
+        {
+          "_id": "#191970",
+          "label": "Meia Noite",
+          "imagem": "jarras/jarra-ondas-meia-noite.jpeg"
+        },
+        {
+          "_id": "#ADD8E6",
+          "label": "Azul Claro",
+          "imagem": "jarras/jarra-ondas-azul-claro.jpeg"
+        },
+        {
+          "_id": "#4F7942",
+          "label": "Verde",
+          "imagem": "jarras/jarra-ondas-verde.jpeg"
+        }
+      ],
+      "tamanhos": [
+        "Pequeno",
+        "Grande"
+      ],
+      "tampas": [
+        "Bola"
+      ]
+    },
+    "variantes": [
+      {
+        "sku": "PL314B-MEIA-NOITE-P",
+        "preco": 29.0,
+        "vendidos": 0,
+        "stock": 4,
+        "atributos": {
+          "cor": "#191970",
+          "tamanho": "Pequeno",
+          "tampa": "Bola"
+        }
+      },
+      {
+        "sku": "PL315B-MEIA-NOITE-G",
+        "preco": 39.0,
+        "vendidos": 0,
+        "stock": 8,
+        "atributos": {
+          "cor": "#191970",
+          "tamanho": "Grande",
+          "tampa": "Bola"
+        }
+      },
+      {
+        "sku": "PL314B-AZUL-CLARO-P",
+        "preco": 29.0,
+        "vendidos": 0,
+        "stock": 4,
+        "atributos": {
+          "cor": "#ADD8E6",
+          "tamanho": "Pequeno",
+          "tampa": "Bola"
+        }
+      },
+      {
+        "sku": "PL315B-AZUL-CLARO-G",
+        "preco": 39.0,
+        "vendidos": 0,
+        "stock": 8,
+        "atributos": {
+          "cor": "#ADD8E6",
+          "tamanho": "Grande",
+          "tampa": "Bola"
+        }
+      },
+      {
+        "sku": "PL314B-VERDE-P",
+        "preco": 29.0,
+        "vendidos": 0,
+        "stock": 4,
+        "atributos": {
+          "cor": "#4F7942",
+          "tamanho": "Pequeno",
+          "tampa": "Bola"
+        }
+      },
+      {
+        "sku": "PL315B-VERDE-G",
+        "preco": 39.0,
+        "vendidos": 0,
+        "stock": 8,
+        "atributos": {
+          "cor": "#4F7942",
+          "tamanho": "Grande",
+          "tampa": "Bola"
+        }
+      }
+    ]
+  },
+  {
+    "_id": "jarra-ananas",
+    "nome": "Jarra Ananás",
+    "categoriaId": "jarras",
+    "imagemBase": "jarras/jarra-ananas-verde.jpeg",
+    "opcoes": {
+      "cores": [
+        {
+          "_id": "#4F7942",
+          "label": "Verde",
+          "imagem": "jarras/jarra-ananas-verde.jpeg"
+        }
+      ],
+      "tamanhos": [
+        "Pequeno",
+        "Grande"
+      ],
+      "tampas": []
+    },
+    "variantes": [
+      {
+        "sku": "PL2362-1C",
+        "preco": 17.0,
+        "vendidos": 0,
+        "stock": 4,
+        "atributos": {
+          "cor": "#4F7942",
+          "tamanho": "Pequeno"
+        }
+      },
+      {
+        "sku": "PL2362-2C",
+        "preco": 27.0,
+        "vendidos": 0,
+        "stock": 8,
+        "atributos": {
+          "cor": "#4F7942",
+          "tamanho": "Grande"
+        }
+      }
+    ]
+  },
+  {
+    "_id": "livros-decorativos",
+    "nome": "Livros Decorativos",
+    "categoriaId": "objetos-decorativos",
+    "imagemBase": "objetos_decorativos/livro-arquitetura.jpeg",
+    "opcoes": {
+      "cores": [
+        {
+          "_id": "#ADD8E6",
+          "label": "Arquitetura",
+          "imagem": "objetos_decorativos/livro-arquitetura.jpeg"
+        },
+        {
+          "_id": "#C4BC9B",
+          "label": "Interior Design",
+          "imagem": "objetos_decorativos/livro-interiordesign.jpeg"
+        },
+        {
+          "_id": "#8B4513",
+          "label": "New York",
+          "imagem": "objetos_decorativos/livro-newyork.jpeg"
+        },
+        {
+          "_id": "#5353ec",
+          "label": "Pinguim",
+          "imagem": "objetos_decorativos/livro-pinguim.jpeg"
+        }
+      ],
+      "tamanhos": [],
+      "tampas": []
+    },
+    "variantes": [
+      {
+        "sku": "livro-arquitetura",
+        "preco": 12.0,
+        "vendidos": 0,
+        "stock": 4,
+        "atributos": {
+          "cor": "#ADD8E6"
+        }
+      },
+      {
+        "sku": "livro-interiordesign",
+        "preco": 12.0,
+        "vendidos": 0,
+        "stock": 8,
+        "atributos": {
+          "cor": "#C4BC9B"
+        }
+      },
+      {
+        "sku": "livro-newyork",
+        "preco": 12.0,
+        "vendidos": 0,
+        "stock": 8,
+        "atributos": {
+          "cor": "#8B4513"
+        }
+      },
+      {
+        "sku": "livro-pinguim",
+        "preco": 12.0,
+        "vendidos": 0,
+        "stock": 8,
+        "atributos": {
+          "cor": "#5353ec"
+        }
+      }
+    ]
+  },
+  {
+    "_id": "set-livros-decorativos",
+    "nome": "Set Livros Decorativos",
+    "categoriaId": "objetos-decorativos",
+    "imagemBase": "objetos_decorativos/setlivro-interiordesign.jpeg",
+    "opcoes": {
+      "cores": [
+        {
+          "_id": "#FFC0CB",
+          "label": "Rosa",
+          "imagem": "objetos_decorativos/setlivro-luxurycars.jpeg"
+        },
+        {
+          "_id": "#4F7942",
+          "label": "Verde",
+          "imagem": "objetos_decorativos/setlivro-interiordesign.jpeg"
+        },
+        {
+          "_id": "#8B4513",
+          "label": "Castanho",
+          "imagem": "objetos_decorativos/setlivro-motas.jpeg"
+        }
+      ],
+      "tamanhos": [],
+      "tampas": []
+    },
+    "variantes": [
+      {
+        "sku": "setlivro-interiordesign",
+        "preco": 22.0,
+        "vendidos": 0,
+        "stock": 8,
+        "atributos": {
+          "cor": "#4F7942"
+        }
+      },
+      {
+        "sku": "setlivro-luxurycars",
+        "preco": 22.0,
+        "vendidos": 0,
+        "stock": 8,
+        "atributos": {
+          "cor": "#FFC0CB"
+        }
+      },
+      {
+        "sku": "setlivro-motas",
+        "preco": 22.0,
+        "vendidos": 0,
+        "stock": 8,
+        "atributos": {
+          "cor": "#8B4513"
+        }
+      }
+    ]
+  },
+  {
+    "_id": "copo",
+    "nome": "Copo Vidro",
+    "categoriaId": "objetos-decorativos",
+    "imagemBase": "objetos_decorativos/copo-rosa.jpeg",
+    "opcoes": {
+      "cores": [
+        {
+          "_id": "#FFC0CB",
+          "label": "Rosa",
+          "imagem": "objetos_decorativos/copo-rosa.jpeg"
+        },
+        {
+          "_id": "#191970",
+          "label": "Meia Noite",
+          "imagem": "objetos_decorativos/copo-meia-noite.jpeg"
+        },
+        {
+          "_id": "#F8F8F8",
+          "label": "Transparente",
+          "imagem": "objetos_decorativos/copo-transparente.jpeg"
+        }
+      ],
+      "tamanhos": [
+        "Pequeno",
+        "Grande"
+      ],
+      "tampas": []
+    },
+    "variantes": [
+      {
+        "sku": "DDC1-ROSA-P",
+        "preco": 15.0,
+        "vendidos": 0,
+        "stock": 4,
+        "atributos": {
+          "cor": "#FFC0CB",
+          "tamanho": "Pequeno"
+        }
+      },
+      {
+        "sku": "DDC2-ROSA-G",
+        "preco": 15.0,
+        "vendidos": 0,
+        "stock": 8,
+        "atributos": {
+          "cor": "#FFC0CB",
+          "tamanho": "Grande"
+        }
+      },
+      {
+        "sku": "DDC1-MEIA-NOITE-P",
+        "preco": 15.0,
+        "vendidos": 0,
+        "stock": 4,
+        "atributos": {
+          "cor": "#191970",
+          "tamanho": "Pequeno"
+        }
+      },
+      {
+        "sku": "DDC2-MEIA-NOITE-G",
+        "preco": 15.0,
+        "vendidos": 0,
+        "stock": 8,
+        "atributos": {
+          "cor": "#191970",
+          "tamanho": "Grande"
+        }
+      },
+      {
+        "sku": "DDC1-TRANSPARENTE-P",
+        "preco": 15.0,
+        "vendidos": 0,
+        "stock": 4,
+        "atributos": {
+          "cor": "#F8F8F8",
+          "tamanho": "Pequeno"
+        }
+      },
+      {
+        "sku": "DDC2-TRANSPARENTE-G",
+        "preco": 15.0,
+        "vendidos": 0,
+        "stock": 8,
+        "atributos": {
+          "cor": "#F8F8F8",
+          "tamanho": "Grande"
+        }
+      }
+    ]
+  },
+  {
+    "_id": "porta-fotos-veludo-ripado",
+    "nome": "Porta-fotos Veludo Ripado",
+    "categoriaId": "porta-fotos",
+    "imagemBase": "porta_fotos/veludo-ripado.png",
+    "opcoes": {
+      "cores": [
+        {
+          "_id": "#FFFDD0",
+          "label": "Creme",
+          "imagem": "porta_fotos/veludo-ripado.png"
+        },
+        {
+          "_id": "#C4BC9B",
+          "label": "Bege",
+          "imagem": "porta_fotos/veludo-ripado.png"
+        },
+        {
+          "_id": "#C68E17",
+          "label": "Caramelo",
+          "imagem": "porta_fotos/veludo-ripado.png"
+        },
+        {
+          "_id": "#4B3621",
+          "label": "Café",
+          "imagem": "porta_fotos/veludo-ripado.png"
+        }
+      ],
+      "tamanhos": [
+        "15x20"
+      ],
+      "tampas": []
+    },
+    "variantes": [
+      {
+        "sku": "ITMF216193E-CREME-15X20",
+        "preco": 6.0,
+        "vendidos": 0,
+        "stock": 12,
+        "atributos": {
+          "cor": "#FFFDD0",
+          "tamanho": "15x20"
+        }
+      },
+      {
+        "sku": "ITMF216193E-BEGE-15X20",
+        "preco": 6.0,
+        "vendidos": 0,
+        "stock": 12,
+        "atributos": {
+          "cor": "#C4BC9B",
+          "tamanho": "15x20"
+        }
+      },
+      {
+        "sku": "ITMF216193E-CARAMELO-15X20",
+        "preco": 6.0,
+        "vendidos": 0,
+        "stock": 12,
+        "atributos": {
+          "cor": "#C68E17",
+          "tamanho": "15x20"
+        }
+      },
+      {
+        "sku": "ITMF216193E-CAFE-15X20",
+        "preco": 6.0,
+        "vendidos": 0,
+        "stock": 12,
+        "atributos": {
+          "cor": "#4B3621",
+          "tamanho": "15x20"
+        }
+      }
+    ]
+  },
+  {
+    "_id": "porta-fotos-travertino",
+    "nome": "Porta-fotos Travertino",
+    "categoriaId": "porta-fotos",
+    "imagemBase": "porta_fotos/travertino.png",
+    "opcoes": {
+      "cores": [
+        {
+          "_id": "#EAE0C8",
+          "label": "Travertino",
+          "imagem": "porta_fotos/travertino.png"
+        }
+      ],
+      "tamanhos": [
+        "10x15",
+        "15x20",
+        "20x25"
+      ],
+      "tampas": []
+    },
+    "variantes": [
+      {
+        "sku": "ITMF222923D",
+        "preco": 3.5,
+        "vendidos": 0,
+        "stock": 4,
+        "atributos": {
+          "cor": "#EAE0C8",
+          "tamanho": "10x15"
+        }
+      },
+      {
+        "sku": "ITMF222925E",
+        "preco": 4.5,
+        "vendidos": 0,
+        "stock": 8,
+        "atributos": {
+          "cor": "#EAE0C8",
+          "tamanho": "15x20"
+        }
+      },
+      {
+        "sku": "ITMF222926D",
+        "preco": 5.5,
+        "vendidos": 0,
+        "stock": 8,
+        "atributos": {
+          "cor": "#EAE0C8",
+          "tamanho": "20x25"
+        }
+      }
+    ]
+  },
+  {
+    "_id": "porta-fotos-dourado-fino",
+    "nome": "Porta-fotos Dourado Fino",
+    "categoriaId": "porta-fotos",
+    "imagemBase": "porta_fotos/dourado-fino.png",
+    "opcoes": {
+      "cores": [
+        {
+          "_id": "#D4AF37",
+          "label": "Dourado",
+          "imagem": "porta_fotos/dourado-fino.png"
+        }
+      ],
+      "tamanhos": [
+        "10x15",
+        "15x20",
+        "20x25"
+      ],
+      "tampas": []
+    },
+    "variantes": [
+      {
+        "sku": "ITMF221134E",
+        "preco": 5.0,
+        "vendidos": 0,
+        "stock": 4,
+        "atributos": {
+          "cor": "#D4AF37",
+          "tamanho": "10x15"
+        }
+      },
+      {
+        "sku": "ITMF221136D",
+        "preco": 7.0,
+        "vendidos": 0,
+        "stock": 8,
+        "atributos": {
+          "cor": "#D4AF37",
+          "tamanho": "15x20"
+        }
+      },
+      {
+        "sku": "ITMF221137D",
+        "preco": 9.0,
+        "vendidos": 0,
+        "stock": 8,
+        "atributos": {
+          "cor": "#D4AF37",
+          "tamanho": "20x25"
+        }
+      }
+    ]
+  },
+  {
+    "_id": "aparador-travertino",
+    "nome": "Aparador Travertino",
+    "categoriaId": "aparadores-consolas",
+    "imagemBase": "aparadores/aparadores.jpeg",
+    "opcoes": {
+      "cores": [
+        {
+          "_id": "#EAE0C8",
+          "label": "Travertino",
+          "imagem": "aparadores/aparadores.jpeg"
+        }
+      ],
+      "tamanhos": [
+        "80cm"
+      ],
+      "tampas": []
+    },
+    "variantes": [
+      {
+        "sku": "DDAPARADOR80",
+        "preco": 235.0,
+        "vendidos": 0,
+        "stock": 4,
+        "atributos": {
+          "cor": "#EAE0C8",
+          "tamanho": "80cm"
+        }
+      }
+    ]
+  },
+  {
+    "_id": "floreira-coluna",
+    "nome": "Floreira Coluna",
+    "categoriaId": "floreiras",
+    "imagemBase": "floreiras/coluna-prata.png",
+    "opcoes": {
+      "cores": [
+        {
+          "_id": "#C0C0C0",
+          "label": "Prata",
+          "imagem": "floreiras/coluna-prata.png"
+        },
+        {
+          "_id": "#D4AF37",
+          "label": "Dourado",
+          "imagem": "floreiras/coluna-dourada.png"
+        }
+      ],
+      "tamanhos": [
+        "60cm",
+        "80cm",
+        "100cm"
+      ],
+      "tampas": []
+    },
+    "variantes": [
+      {
+        "sku": "DDCOLUNA60-PRATA-60CM",
+        "preco": 105.0,
+        "vendidos": 0,
+        "stock": 4,
+        "atributos": {
+          "cor": "#C0C0C0",
+          "tamanho": "60cm"
+        }
+      },
+      {
+        "sku": "DDCOLUNA80-PRATA-80CM",
+        "preco": 115.0,
+        "vendidos": 0,
+        "stock": 8,
+        "atributos": {
+          "cor": "#C0C0C0",
+          "tamanho": "80cm"
+        }
+      },
+      {
+        "sku": "DDCOLUNA100-PRATA-100CM",
+        "preco": 125.0,
+        "vendidos": 0,
+        "stock": 8,
+        "atributos": {
+          "cor": "#C0C0C0",
+          "tamanho": "100cm"
+        }
+      },
+      {
+        "sku": "DDCOLUNA60-DOURADO-60CM",
+        "preco": 105.0,
+        "vendidos": 0,
+        "stock": 4,
+        "atributos": {
+          "cor": "#D4AF37",
+          "tamanho": "60cm"
+        }
+      },
+      {
+        "sku": "DDCOLUNA80-DOURADO-80CM",
+        "preco": 115.0,
+        "vendidos": 0,
+        "stock": 8,
+        "atributos": {
+          "cor": "#D4AF37",
+          "tamanho": "80cm"
+        }
+      },
+      {
+        "sku": "DDCOLUNA100-DOURADO-100CM",
+        "preco": 125.0,
+        "vendidos": 0,
+        "stock": 8,
+        "atributos": {
+          "cor": "#D4AF37",
+          "tamanho": "100cm"
+        }
+      }
+    ]
+  },
+  {
+    "_id": "almofada50x50",
+    "nome": "Almofadas 50x50",
+    "categoriaId": "almofadas",
+    "imagemBase": "almofadas/africa.png",
+    "opcoes": {
+      "cores": [
+        {
+          "_id": "#A52A2A",
+          "label": "Africa",
+          "imagem": "almofadas/africa.png"
+        },
+        {
+          "_id": "#D2B48C",
+          "label": "Kanos",
+          "imagem": "almofadas/kanos.png"
+        },
+        {
+          "_id": "#F8F4FF",
+          "label": "Magnolia",
+          "imagem": "almofadas/magnolia.png"
+        },
+        {
+          "_id": "#E3D5B8",
+          "label": "Roma Bege",
+          "imagem": "almofadas/roma-bege.png"
+        },
+        {
+          "_id": "#D1BE9B",
+          "label": "Veludo Bege",
+          "imagem": "almofadas/veludo-bege.png"
+        }
+      ],
+      "tamanhos": [
+        "50x50"
+      ],
+      "tampas": []
+    },
+    "variantes": [
+      {
+        "sku": "DDALMOFADA50X50-AFRICA-50X50",
+        "preco": 13.0,
+        "vendidos": 0,
+        "stock": 4,
+        "atributos": {
+          "cor": "#A52A2A",
+          "tamanho": "50x50"
+        }
+      },
+      {
+        "sku": "DDALMOFADA50X50-KANOS-50X50",
+        "preco": 13.0,
+        "vendidos": 0,
+        "stock": 8,
+        "atributos": {
+          "cor": "#D2B48C",
+          "tamanho": "50x50"
+        }
+      },
+      {
+        "sku": "DDALMOFADA50X50-MAGNOLIA-50X50",
+        "preco": 13.0,
+        "vendidos": 0,
+        "stock": 8,
+        "atributos": {
+          "cor": "#F8F4FF",
+          "tamanho": "50x50"
+        }
+      },
+      {
+        "sku": "DDALMOFADA50X50-ROMA-BEGE-50X50",
+        "preco": 13.0,
+        "vendidos": 0,
+        "stock": 4,
+        "atributos": {
+          "cor": "#E3D5B8",
+          "tamanho": "50x50"
+        }
+      },
+      {
+        "sku": "DDALMOFADA50X50-VELUDO-BEGE-50X50",
+        "preco": 13.0,
+        "vendidos": 0,
+        "stock": 8,
+        "atributos": {
+          "cor": "#D1BE9B",
+          "tamanho": "50x50"
+        }
+      }
+    ]
+  },
+  {
+    "_id": "toalheiro",
+    "nome": "Toalheiro",
+    "categoriaId": "toalheiros",
+    "imagemBase": "toalheiros/preto.jpeg",
+    "opcoes": {
+      "cores": [
+        {
+          "_id": "#FFFDD0",
+          "label": "Creme",
+          "imagem": "toalheiros/creme.jpeg"
+        },
+        {
+          "_id": "#D4AF37",
+          "label": "Dourado",
+          "imagem": "toalheiros/dourado.jpeg"
+        },
+        {
+          "_id": "#C0C0C0",
+          "label": "Prata",
+          "imagem": "toalheiros/prata.jpeg"
+        },
+        {
+          "_id": "#000000",
+          "label": "Preto",
+          "imagem": "toalheiros/preto.jpeg"
+        }
+      ],
+      "tamanhos": [
+        "Único"
+      ],
+      "tampas": []
+    },
+    "variantes": [
+      {
+        "sku": "DDTOAL-PRATA",
+        "preco": 21.0,
+        "vendidos": 0,
+        "stock": 4,
+        "atributos": {
+          "cor": "#C0C0C0",
+          "tamanho": "Único"
+        }
+      },
+      {
+        "sku": "DDTOAL-DOURADO",
+        "preco": 21.0,
+        "vendidos": 0,
+        "stock": 8,
+        "atributos": {
+          "cor": "#D4AF37",
+          "tamanho": "Único"
+        }
+      },
+      {
+        "sku": "DDTOAL-CREME",
+        "preco": 21.0,
+        "vendidos": 0,
+        "stock": 8,
+        "atributos": {
+          "cor": "#FFFDD0",
+          "tamanho": "Único"
+        }
+      },
+      {
+        "sku": "DDTOAL-PRETO",
+        "preco": 21.0,
+        "vendidos": 0,
+        "stock": 4,
+        "atributos": {
+          "cor": "#000000",
+          "tamanho": "Único"
+        }
+      }
+    ]
+  },
+  {
+    "_id": "orquidea-diagonal",
+    "nome": "Orquidea Diagonal",
+    "categoriaId": "orquideas",
+    "imagemBase": "orquideas/diagonal-branco.png",
+    "opcoes": {
+      "cores": [
+        {
+          "_id": "#FFFFFF",
+          "label": "Branco",
+          "imagem": "orquideas/diagonal-branco.png"
+        }
+      ],
+      "tamanhos": [
+        "Único"
+      ],
+      "tampas": []
+    },
+    "variantes": [
+      {
+        "sku": "DDORQDIAGONAL",
+        "preco": 75.0,
+        "vendidos": 0,
+        "stock": 4,
+        "atributos": {
+          "cor": "#FFFFFF",
+          "tamanho": "Único"
+        }
+      }
+    ]
+  },
+  {
+    "_id": "orquidea-diamante",
+    "nome": "Orquidea Diamante",
+    "categoriaId": "orquideas",
+    "imagemBase": "orquideas/diamante-branco.jpeg",
+    "opcoes": {
+      "cores": [
+        {
+          "_id": "#FFFFFF",
+          "label": "Branco",
+          "imagem": "orquideas/diamante-branco.jpeg"
+        },
+        {
+          "_id": "#D4AF37",
+          "label": "Dourado",
+          "imagem": "orquideas/diamante-dourado.jpeg"
+        }
+      ],
+      "tamanhos": [
+        "Único"
+      ],
+      "tampas": []
+    },
+    "variantes": [
+      {
+        "sku": "DDORQDIAMANTE-BRANCO",
+        "preco": 85.0,
+        "vendidos": 0,
+        "stock": 4,
+        "atributos": {
+          "cor": "#FFFFFF",
+          "tamanho": "Único"
+        }
+      },
+      {
+        "sku": "DDORQDIAMANTE-DOURADO",
+        "preco": 85.0,
+        "vendidos": 0,
+        "stock": 4,
+        "atributos": {
+          "cor": "#D4AF37",
+          "tamanho": "Único"
+        }
+      }
+    ]
+  },
+  {
+    "_id": "orquidea-ripada",
+    "nome": "Orquidea Ripada",
+    "categoriaId": "orquideas",
+    "imagemBase": "orquideas/ripada-branco.jpeg",
+    "opcoes": {
+      "cores": [
+        {
+          "_id": "#FFFFFF",
+          "label": "Branco",
+          "imagem": "orquideas/ripada-branco.jpeg"
+        }
+      ],
+      "tamanhos": [
+        "Único"
+      ],
+      "tampas": []
+    },
+    "variantes": [
+      {
+        "sku": "DDORQRIPADA",
+        "preco": 85.0,
+        "vendidos": 0,
+        "stock": 4,
+        "atributos": {
+          "cor": "#FFFFFF",
+          "tamanho": "Único"
+        }
+      }
+    ]
+  },
+  {
+    "_id": "orquidea-amendoa",
+    "nome": "Orquidea Amendoa",
+    "categoriaId": "orquideas",
+    "imagemBase": "orquideas/amendoa-branco.jpeg",
+    "opcoes": {
+      "cores": [
+        {
+          "_id": "#FFFFFF",
+          "label": "Branco",
+          "imagem": "orquideas/amendoa-branco.jpeg"
+        },
+        {
+          "_id": "#D4AF37",
+          "label": "Dourado",
+          "imagem": "orquideas/amendoa-dourado.png"
+        }
+      ],
+      "tamanhos": [
+        "Único"
+      ],
+      "tampas": []
+    },
+    "variantes": [
+      {
+        "sku": "DDORQAMENDOA-BRANCO",
+        "preco": 85.0,
+        "vendidos": 0,
+        "stock": 4,
+        "atributos": {
+          "cor": "#FFFFFF",
+          "tamanho": "Único"
+        }
+      },
+      {
+        "sku": "DDORQAMENDOA-DOURADO",
+        "preco": 85.0,
+        "vendidos": 0,
+        "stock": 4,
+        "atributos": {
+          "cor": "#D4AF37",
+          "tamanho": "Único"
+        }
+      }
+    ]
+  },
+  {
+    "_id": "orquidea-feijao",
+    "nome": "Orquidea Feijão",
+    "categoriaId": "orquideas",
+    "imagemBase": "orquideas/feijao-branco.png",
+    "opcoes": {
+      "cores": [
+        {
+          "_id": "#FFFFFF",
+          "label": "Branco",
+          "imagem": "orquideas/feijao-branco.png"
+        },
+        {
+          "_id": "#D4AF37",
+          "label": "Dourado",
+          "imagem": "orquideas/feijao-dourado.jpeg"
+        }
+      ],
+      "tamanhos": [
+        "Único"
+      ],
+      "tampas": []
+    },
+    "variantes": [
+      {
+        "sku": "DDORQFEIJAO-BRANCO",
+        "preco": 85.0,
+        "vendidos": 0,
+        "stock": 4,
+        "atributos": {
+          "cor": "#FFFFFF",
+          "tamanho": "Único"
+        }
+      },
+      {
+        "sku": "DDORQFEIJAO-DOURADO",
+        "preco": 85.0,
+        "vendidos": 0,
+        "stock": 4,
+        "atributos": {
+          "cor": "#D4AF37",
+          "tamanho": "Único"
+        }
+      }
+    ]
+  },
+  {
+    "_id": "orquidea-bicos",
+    "nome": "Orquidea Bicos",
+    "categoriaId": "orquideas",
+    "imagemBase": "orquideas/bicos-branco.png",
+    "opcoes": {
+      "cores": [
+        {
+          "_id": "#FFFFFF",
+          "label": "Branco",
+          "imagem": "orquideas/bicos-branco.png"
+        },
+        {
+          "_id": "#D4AF37",
+          "label": "Dourado",
+          "imagem": "orquideas/bicos-dourado.png"
+        }
+      ],
+      "tamanhos": [
+        "Único"
+      ],
+      "tampas": []
+    },
+    "variantes": [
+      {
+        "sku": "DDORQBICOS-BRANCO",
+        "preco": 55.0,
+        "vendidos": 0,
+        "stock": 4,
+        "atributos": {
+          "cor": "#FFFFFF",
+          "tamanho": "Único"
+        }
+      },
+      {
+        "sku": "DDORQBICOS-DOURADO",
+        "preco": 55.0,
+        "vendidos": 0,
+        "stock": 4,
+        "atributos": {
+          "cor": "#D4AF37",
+          "tamanho": "Único"
+        }
+      }
+    ]
+  },
+  {
+    "_id": "orquidea-maos",
+    "nome": "Orquidea Mãos",
+    "categoriaId": "orquideas",
+    "imagemBase": "orquideas/maos-dourado.png",
+    "opcoes": {
+      "cores": [
+        {
+          "_id": "#D4AF37",
+          "label": "Dourado",
+          "imagem": "orquideas/maos-dourado.png"
+        }
+      ],
+      "tamanhos": [
+        "Único"
+      ],
+      "tampas": []
+    },
+    "variantes": [
+      {
+        "sku": "DDORQMAOS",
+        "preco": 55.0,
+        "vendidos": 0,
+        "stock": 4,
+        "atributos": {
+          "cor": "#D4AF37",
+          "tamanho": "Único"
+        }
+      }
+    ]
+  }
+]

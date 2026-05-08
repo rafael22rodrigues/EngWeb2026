@@ -1,0 +1,163 @@
+extends ../layout
+include ../../components/resumoOrder.pug
+
+block content
+    .payment-page
+        .left-section
+            h1 Método de Pagamento
+            .payment-box
+                h4 Selecione o método de pagamento:
+                .payment-methods
+                    button.payment-option.active(type="button", data-method="card")
+                        img(src="/assets/pagamento/credit-card.png" alt="Cartão de Crédito/Débito")
+                        span CARTÃO DE CRÉDITO / DÉBITO
+
+                    button.payment-option(type="button", data-method="mbway")
+                        img(src="/assets/pagamento/mbway.png" alt="MB WAY")
+                        span MB WAY
+
+                    button.payment-option(type="button", data-method="multibanco")
+                        img(src="/assets/pagamento/multibanco.png" alt="REFERÊNCIA MULTIBANCO")
+                        span REFERÊNCIA MULTIBANCO
+
+                .payment-details 
+                    .payment-detail.active(data-detail="card")
+                        p.detail-title Pagamento por cartão
+                        p.detail-text (Implementação futura)
+
+                    .payment-detail(data-detail="mbway")
+                        p.detail-title Pagamento por MB WAY
+                        input.payment-input(type="tel", name="telemovel", placeholder="Nº de Telemóvel" required)
+                        p.detail-text Insere o número associado ao MB WAY para receberes a confirmação no telemóvel.
+                        
+                    .payment-detail(data-detail="multibanco")
+                        p.detail-title Referência Multibanco
+                        p.detail-text (Implementação futura)
+
+        .right-section
+            form(action="/pagamento/finalizar", method="POST")
+                +resumoOrder(totalProdutos, total, 'Confirmar Encomenda →', '#', true)
+    style.
+        .payment-page {
+            display: flex;
+            flex-direction: row;
+            gap: 140px;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 40px;
+        }
+
+        .left-section {
+            width: 820px;
+        }
+
+        .payment-box {
+            background-color: #d8d8d8;
+            border-radius: 15px;
+            padding: 24px;
+            min-height: 400px;
+        }
+
+        .payment-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .payment-option {
+            height: 45px;
+            background: #fff;
+            border: 1px solid #f1f1f1;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0 16px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.8px;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .payment-option img {
+            width: 35px;
+            height: 35px;
+            object-fit: contain;
+        }
+
+        .payment-option.active {
+            border: 2px solid var(--button-bg);
+            color: var(--button-bg);
+        }
+
+        .payment-option:hover {
+            border-color: var(--button-bg);
+            color: var(--button-bg);
+        }
+
+        .payment-details {
+            margin-top: 30px;
+        }
+
+        .payment-detail {
+            display: none;
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 22px;
+        }
+
+        .payment-detail.active {
+            display: block;
+        }
+
+        .detail-title {
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .detail-text {
+            font-size: 13px;
+            color: #666;
+        }
+
+        .payment-input {
+            height: 40px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 15px;
+            letter-spacing: 0.9px;
+            outline: none;
+        }
+
+        .payment-input:focus {
+            border-color: var(--button-bg);
+        }
+
+        .right-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+            margin-top: 50px;
+        }
+
+    script.
+        document.addEventListener('DOMContentLoaded', () => {
+            const options = document.querySelectorAll('.payment-option');
+            const details = document.querySelectorAll('.payment-detail');
+
+            options.forEach(option => {
+                option.addEventListener('click', () => {
+                    const method = option.dataset.method;
+
+                    options.forEach(btn => btn.classList.remove('active'));
+                    option.classList.add('active');
+
+                    details.forEach(detail => {
+                        detail.classList.toggle('active', detail.dataset.detail === method);
+                    });
+                });
+            });
+        });

@@ -1,0 +1,87 @@
+.navbar
+  if user && user.tipo == 'admin'
+    button.menu-btn#adminMenuBtn(type='button')
+      img(src='/assets/navbar/sidebar-admin.svg', alt='Menu Admin' style='width: 23px;')
+  else
+    button.menu-btn#menuBtn(type='button')
+      img(src='/assets/navbar/menu.png', alt='Menu')
+  
+  a.logo(href='/home')
+    img(src='/assets/logo.png', alt='DianaDecor')
+    span DIANADECOR
+  
+  .header-icons
+    if user && user.tipo == 'admin'
+      
+    else 
+      a.icon-link(href='/perfil')
+        img(src='/assets/navbar/user.png', alt='Utilizador')
+
+      a.icon-link(href='/wishlist')
+        img(src='/assets/navbar/favorites.png', alt='Favoritos')
+
+      a.icon-link(href='/carrinho')
+        img(src='/assets/navbar/shopping-bag.png', alt='Carrinho')
+
+    if user
+      a.icon-link(href='/logout')
+        img(src='/assets/navbar/logout-icon.svg', alt='Logout')
+
+style.
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 4rem;
+    border-bottom: 1px solid #eee;
+    background: #fff;
+    color: var(--text-color);
+  }
+
+  .menu-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .menu-btn img {
+    width: 19px;
+  }
+
+  .logo {
+    display: flex;
+    gap: 8px;
+    text-decoration: none;
+    color: var(--text-color);
+  }
+
+  .logo img {
+    width: 42px;
+    height: 35px;
+  }
+
+  .logo span {
+    font-family: 'GFS Didot', serif;
+    font-size: 30px;
+    font-weight: 400;
+    line-height: normal;
+  }
+
+  .header-icons {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .icon-link {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+  }
+
+  .icon-link img {
+    width: 20px;
+    height: 20px;
+  }

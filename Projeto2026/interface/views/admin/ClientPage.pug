@@ -1,0 +1,137 @@
+extends ../layout
+include ../../components/table.pug
+
+block content
+    main.page-shell
+        a.go-back(href="/admin/users") ← Voltar
+        .page-content
+            section.page-card
+                .top-card
+                    .title
+                        img(src="/assets/navbar/user.png" alt="User Icon" style="width:24px;")
+                        h1 Dados do Cliente
+                    .line
+                        h2.label Nome:
+                        h2.value #{user_info.nome}
+                    .line
+                        h2.label Email:
+                        h2.value #{user_info.email}
+                    .line
+                        h2.label Telefone:
+                        h2.value #{user_info.telefone}
+                    if user_info.nif
+                        .line
+                            h2.label NIF:
+                            h2.value #{user_info.nif}
+                .encomendas
+                    h1 Encomendas do Cliente
+                if rows.length > 0
+                    .table-wrapper
+                        +table(['Encomenda Nr', 'Data', 'Estado', 'Valor', 'Produtos', 'Ações'], rows)
+                else
+                    p O cliente ainda não fez nenhuma encomenda.
+
+    style.
+        .page-shell {
+            display: flex;
+            flex-direction: column;
+            padding: 2rem 1rem;
+        }
+
+        .page-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0px 50px 20px 50px;
+            flex-direction: column;
+        }
+
+        .page-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+            width: 80%;
+        }
+
+        .top-card {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            background-color: var(--form-bg);
+            font-family: "DM Sans";
+            opacity: 0.6;
+            width: 20%;
+            padding: 20px 40px 40px 40px;
+            gap: 2px;
+        }
+
+        .top-card h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .line {
+            display: flex;
+            gap: 8px;
+            margin: 0;
+            font-size: 16px;
+        }
+        .label {
+            font-weight: 600;
+            color: #292424;
+            margin: 0;
+            font-size: 16px;
+        }
+        .value {
+            font-weight: 400;
+            color: #292424;
+            margin: 0;
+            font-size: 16px;
+        }
+
+
+        .table-wrapper {
+            width: 100%;
+        }
+
+        .encomendas {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .encomendas h1 {
+            font-size: 18px;
+            margin-bottom: 0.5rem;
+        }
+
+        .title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .go-back {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: 600;
+            color: white;
+            text-decoration: none;
+            background-color: var(--main-color);
+            padding: 10px 20px;
+            width: 80px;
+            justify-content: center;
+            margin-left: 50px;
+        }
+
+        .go-back:hover{
+            background-color: var(--main-color-hover);
+            text-decoration: none;
+        }
+

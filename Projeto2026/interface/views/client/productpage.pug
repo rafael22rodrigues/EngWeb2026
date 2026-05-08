@@ -1,0 +1,610 @@
+extends ../layout
+
+include ../../components/productCard
+
+block content
+    - const favIds = JSON.stringify(favoritosIds || [])
+
+    // A página ao ser renderizada
+    - 
+        const corInicial = produto.opcoes?.cores?.[0];
+        const imagemInicial = corInicial?.imagem || produto.imagemBase;
+    .product-page
+        .product-main
+            .product-gallery
+                .product-img-swap
+                    img#mainImage(src=imagemInicial alt=produto.nome)
+                    button.produto-like(data-id=produto._id onclick='darLike(event, this)' aria-label='Adicionar aos favoritos')
+                        svg(xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round')
+                            path(d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z')
+                if produto.opcoes.cores && produto.opcoes.cores.length > 1
+                    .thumb-list
+                        each cor in produto.opcoes.cores
+                            img.thumb(
+                                src=cor.imagem
+                                alt=cor.label
+                                data-src=cor.imagem
+                                data-cor=cor._id
+                                onclick='selectThumb(this)'
+                            )
+
+            .product-info
+                h1.product-name= produto.nome
+                p.product-preco#productpreco= produto.variantes[0].preco.toFixed(2) + '€'
+
+                hr.divider
+
+                if produto.opcoes.cores && produto.opcoes.cores.length > 0
+                    .option-group
+                        p.option-label
+                            | Cor:
+                            strong#selectedColor= produto.opcoes.cores[0].label
+                        .color-swatches
+                            each cor, i in produto.opcoes.cores
+                                button.swatch(
+                                    style='background-color: ' + cor._id
+                                    title=cor.label
+                                    data-label=cor.label
+                                    data-img=cor.imagem
+                                    data-cor=cor._id
+                                    class=(i === 0 ? 'active' : '')
+                                    onclick='selectColor(this)'
+                                )
+
+                if produto.opcoes.tamanhos && produto.opcoes.tamanhos.length > 0
+                    .option-group
+                        p.option-label
+                            | Tamanho:
+                            strong#selectedSize= produto.opcoes.tamanhos[0]
+                        .size-options
+                            each tam, i in produto.opcoes.tamanhos
+                                button.size-btn(
+                                    data-size=tam
+                                    class=(i === 0 ? 'active' : '')
+                                    onclick='selectSize(this)'
+                                ) #{tam}
+
+                if produto.opcoes.tampas && produto.opcoes.tampas.length > 0
+                    .option-group
+                        p.option-label
+                            | Tampa:
+                            strong#selectedTampa= produto.opcoes.tampas[0]
+                        .size-options
+                            each tampa, i in produto.opcoes.tampas
+                                button.size-btn(
+                                    data-size=tampa
+                                    data-tampa=tampa
+                                    class=(i === 0 ? 'active' : '')
+                                    onclick='selectTampa(this)'
+                                ) #{tampa}
+
+                .product-actions
+                    if user == null
+                        a.btn-cart(href="/login") Adicionar ao carrinho
+                        a.btn-buy(href="/login") Comprar agora
+                    else 
+                        button.btn-cart(onclick='addVarianteCarrinho(false)') Adicionar ao carrinho
+                        button.btn-buy(onclick='addVarianteCarrinho(true)') Comprar agora
+                .added-to-cart-message(style='display:none;') ✓ Adicionado ao carrinho
+
+    if produtosRelacionados && produtosRelacionados.length > 0
+        .related-section
+            .related-header
+                h2 Mais desta categoria
+                a.ver-todos(href='/categoria/' + produto.categoriaId) Ver todos
+            .related-grid
+                each p in produtosRelacionados
+                    +productCard(p)
+
+
+    style.
+        /* --- Informação para toda a página --- */
+        .product-page {
+            display: flex;
+            justify-content: center;
+            padding: 3rem 4rem;
+            background: #fff;
+        }
+
+        /* --- Divisão que corresponde ao produto que queremos ver e comprar --- */
+        .product-main {
+            display: flex;
+            gap: 4rem;
+            max-width: 1100px;
+            width: 100%;
+        }
+
+        /* --- Galeria de fotos do produto --- */
+        .product-gallery {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        /* --- Sempre que é renderizada a página aparece mostra uma imagem principal --- */
+        .product-gallery #mainImage {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            border-radius: 6px;
+            background: #f5f0eb;
+        }
+
+        /* --- Sempre que a cor é alterada a thumbnail também é --- */
+        .thumb-list {
+            display: flex;
+            gap: 0.6rem;
+        }
+
+        .thumb {
+            width: 64px;
+            height: 64px;
+            object-fit: cover;
+            border-radius: 4px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: border-color 0.2s;
+            background: #f5f0eb;
+        }
+
+        .thumb:hover,
+        .thumb.active { border-color: var(--text-color); }
+
+        /* --- Informação do Produto --- */
+        .product-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        /* --- Nome do produto --- */
+        .product-name {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--text-color);
+            margin: 0 0 0.5rem;
+        }
+        /* --- Preço do Produto --- */
+        .product-preco {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--castanho, #7D5A35);
+            margin: 0 0 1rem;
+        }
+        .product-img-swap {
+            position: relative;
+            width: 100%;
+        }
+
+        .product-img-swap #mainImage {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            border-radius: 6px;
+            background: #f5f0eb;
+        }
+        .produto-like {
+            position: absolute;
+            top: 10px; right: 10px;
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            border: none;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 0.2s, transform 0.2s;
+            z-index: 2;
+        }
+
+        .produto-like svg {
+            width: 30px; height: 30px;
+            color: #aaa;
+            transition: color 0.2s, fill 0.2s;
+        }
+
+        .product-img-swap:hover .produto-like {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .produto-like.ativo svg {
+            color: #e53935;
+            fill: #e53935;
+        }
+
+        .produto-like:hover svg { color: #e53935; }
+
+        .divider {
+            border: none;
+            border-top: 1px dashed #ddd;
+            margin: 0.5rem 0 1.5rem;
+        }
+
+        .option-group { margin-bottom: 1.2rem; }
+
+        .option-label {
+            font-size: 0.85rem;
+            color: #555;
+            margin: 0 0 0.6rem;
+        }
+
+        .option-label strong {
+            color: var(--text-color);
+            font-weight: 600;
+        }
+
+        .color-swatches {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .swatch {
+            width: 36px;
+            height: 36px;
+            border-radius: 4px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: border-color 0.2s, transform 0.15s;
+            outline: none;
+        }
+
+        .swatch:hover { transform: scale(1.1); }
+        .swatch.active { border-color: var(--text-color); }
+
+        .size-options {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .size-btn {
+            padding: 6px 18px;
+            border: 1px solid #ccc;
+            background: #fff;
+            font-size: 0.85rem;
+            cursor: pointer;
+            border-radius: 2px;
+            transition: all 0.2s;
+            color: #444;
+            font-family: inherit;
+        }
+
+        .added-to-cart-message {
+            margin-top: 15px;
+            display:none;
+            align-items:center;
+            gap:8px;
+            width: 50%;
+            padding:6px 12px;
+            color: #0b662f;
+            font-weight:600;
+            font-size: 15px;
+            opacity:1;
+        }
+
+        .size-btn:hover { border-color: var(--text-color); color: var(--text-color); }
+
+        .size-btn.active {
+            border-color: var(--text-color);
+            background: var(--text-color);
+            color: #fff;
+        }
+
+        .size-btn.unavailable {
+            border: 1px dashed #bbb;
+            background: #fff;
+            color: #bbb;
+            cursor: pointer;
+        }
+
+        .success-message {
+            font-size: 17px;
+            font-weight: 500;
+            width: 25%;
+            margin-right: 10px;
+            text-align: center;
+            display: flex;
+            align-self: center;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #btn-cart-success{
+            max-width: 90px;
+            text-decoration: none;
+        }
+
+        .size-btn.unavailable:hover {
+            border-color: #999;
+            color: #999;
+        }
+
+        .swatch.unavailable {
+            opacity: 0.35;
+            border: 2px dashed #bbb !important;
+            cursor: pointer;
+        }
+
+        .swatch.unavailable:hover {
+            transform: scale(1.05);
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .btn-cart {
+            flex: 1;
+            padding: 14px 24px;
+            background: var(--text-color);
+            color: #fff;
+            border: none;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-family: inherit;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .btn-cart:hover { background: #333; }
+
+        .btn-buy {
+            flex: 1;
+            padding: 14px 24px;
+            background: #fff;
+            color: var(--text-color);
+            border: 1px solid var(--text-color);
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .btn-buy:hover { background: var(--text-color); color: #fff; }
+
+        .related-section {
+            padding: 3rem 4rem;
+            background: #faf8f6;
+        }
+
+        .related-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .related-header h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-color);
+        }
+
+        .ver-todos {
+            border: 1px solid var(--text-color);
+            padding: 8px 20px;
+            font-size: 0.8rem;
+            text-decoration: none;
+            color: var(--text-color);
+            letter-spacing: 1px;
+            transition: all 0.2s;
+        }
+
+        .ver-todos:hover { background: var(--text-color); color: #fff; }
+
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .related-card {
+            text-decoration: none;
+            color: var(--text-color);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+    
+    script.
+        const FAVORITOS = new Set(!{favIds});
+    
+        document.querySelectorAll('.produto-like').forEach(btn => {
+            if (FAVORITOS.has(btn.dataset.id)) {
+                btn.classList.add('ativo');
+            }
+        });
+        const variantes = !{JSON.stringify(produto.variantes)};
+        const swatchAtivo = document.querySelector('.swatch.active');
+        const tamanhoAtivo = document.querySelector('.size-btn.active:not([data-tampa])');
+        const tampaAtiva = document.querySelector('.size-btn.active[data-tampa]');
+
+        let corSelecionada = swatchAtivo ? swatchAtivo.dataset.cor : null;
+        let tamanhoSelecionado = tamanhoAtivo ? tamanhoAtivo.dataset.size : null;
+        let tampaSelecionada = tampaAtiva ? tampaAtiva.dataset.tampa : null;
+
+        // Devolve true se existir pelo menos uma variante com stock para esta combinação
+        function varianteDisponivel(cor, tam, tampa) {
+            return variantes.some(v => {
+                const corOk    = cor   === null || cor   === undefined || !v.atributos.cor    || v.atributos.cor    === cor;
+                const tamOk    = tam   === null || tam   === undefined || !v.atributos.tamanho || v.atributos.tamanho === tam;
+                const tampaOk  = tampa === null || tampa === undefined || !v.atributos.tampa  || v.atributos.tampa   === tampa;
+                return corOk && tamOk && tampaOk;
+            });
+        }
+
+        // Devolve a primeira variante disponível que contenha o atributo fixo dado
+        function primeiraVarianteDisponivel(atributoFixo, valorFixo) {
+            return variantes.find(v => v.atributos[atributoFixo] === valorFixo);
+        }
+
+        // Atualizar preço
+        function atualizarPreco() {
+            const variante = variantes.find(v => {
+                const corOk   = !corSelecionada      || !v.atributos.cor     || v.atributos.cor     === corSelecionada;
+                const tamOk   = !tamanhoSelecionado  || !v.atributos.tamanho || v.atributos.tamanho === tamanhoSelecionado;
+                const tampaOk = !tampaSelecionada    || !v.atributos.tampa   || v.atributos.tampa   === tampaSelecionada;
+                return corOk && tamOk && tampaOk;
+            });
+            if (variante) {
+                document.getElementById('productpreco').textContent = variante.preco.toFixed(2) + '€';
+            }
+        }
+
+        // Atualizar estado visual dos botões
+        function atualizarEstadoBotoes() {
+            // Tamanhos: marcar indisponíveis para a cor e tampa actuais
+            document.querySelectorAll('.size-btn[data-size]:not([data-tampa])').forEach(btn => {
+                const tam = btn.dataset.size;
+                const disponivel = varianteDisponivel(corSelecionada, tam, tampaSelecionada);
+                btn.classList.toggle('unavailable', !disponivel);
+            });
+
+            // Cores: marcar indisponíveis para o tamanho e tampa actuais
+            document.querySelectorAll('.swatch[data-cor]').forEach(btn => {
+                const cor = btn.dataset.cor;
+                const disponivel = varianteDisponivel(cor, tamanhoSelecionado, tampaSelecionada);
+                btn.classList.toggle('unavailable', !disponivel);
+            });
+
+            // Tampas: marcar indisponíveis para a cor e tamanho actuais
+            document.querySelectorAll('.size-btn[data-tampa]').forEach(btn => {
+                const tampa = btn.dataset.tampa;
+                const disponivel = varianteDisponivel(corSelecionada, tamanhoSelecionado, tampa);
+                btn.classList.toggle('unavailable', !disponivel);
+            });
+        }
+
+        // Seleção de cor
+        function selectColor(el) {
+            document.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
+            el.classList.add('active');
+            document.getElementById('selectedColor').textContent = el.dataset.label;
+            corSelecionada = el.dataset.cor;
+            if (el.dataset.img) document.getElementById('mainImage').src = el.dataset.img;
+            document.querySelectorAll('.thumb').forEach(t => {
+                t.classList.toggle('active', t.dataset.cor === el.dataset.cor);
+            });
+
+            // Se o tamanho actual não existe para esta cor, mudar para o primeiro disponível
+            if (tamanhoSelecionado && !varianteDisponivel(corSelecionada, tamanhoSelecionado)) {
+                const varDisp = variantes.find(v => v.atributos.cor === corSelecionada);
+                if (varDisp && varDisp.atributos.tamanho) {
+                    tamanhoSelecionado = varDisp.atributos.tamanho;
+                    document.querySelectorAll('.size-btn[data-size]').forEach(b => {
+                        const ativo = b.dataset.size === tamanhoSelecionado;
+                        b.classList.toggle('active', ativo);
+                        const lbl = document.getElementById('selectedSize');
+                        if (ativo && lbl) lbl.textContent = tamanhoSelecionado;
+                    });
+                }
+            }
+            atualizarEstadoBotoes();
+            atualizarPreco();
+        }
+
+        // Carrinho
+        function addVarianteCarrinho(redirect) {
+            const data = {
+                produtoId: !{JSON.stringify(produto._id)},
+                quantidade: 1,
+                sku: null
+            };
+            const variante = variantes.find(v => {
+                const corOk= !corSelecionada|| !v.atributos.cor|| v.atributos.cor === corSelecionada;
+                const tamOk= !tamanhoSelecionado|| !v.atributos.tamanho || v.atributos.tamanho === tamanhoSelecionado;
+                const tampaOk = !tampaSelecionada || !v.atributos.tampa || v.atributos.tampa === tampaSelecionada;
+                return corOk && tamOk && tampaOk;
+            });
+            if (variante) {
+                data.sku = variante.sku;
+
+                axios.post('/carrinho/adicionar', data)
+                    .then(res =>   {
+                        const added_message = document.querySelector('.added-to-cart-message');
+                        if (added_message) {
+                            added_message.style.display = 'block';
+                            setTimeout(()=> {added_message.style.display = 'none';}, 2000); //desaparece
+                        }
+                    }).catch(err => console.error('erro ao adicionar:', err));
+            }
+            if (redirect) window.location.href = '/carrinho';
+        }
+
+        // Seleção da thumbnail
+        function selectThumb(el) {
+            document.getElementById('mainImage').src = el.dataset.src;
+            document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+            el.classList.add('active');
+            document.querySelectorAll('.swatch').forEach(s => {
+                if (s.dataset.cor === el.dataset.cor) {
+                    s.click(); // reutiliza lógica de selectColor
+                }
+            });
+        }
+
+        // Seleção do tamanho
+        function selectSize(el) {
+            // Clicar num tamanho indisponível: muda a cor para a primeira disponível com este tamanho
+            const tam = el.dataset.size;
+            if (el.classList.contains('unavailable')) {
+                const varDisp = variantes.find(v => v.atributos.tamanho === tam);
+                if (varDisp && varDisp.atributos.cor) {
+                    const swatchAlvo = document.querySelector('.swatch[data-cor="' + varDisp.atributos.cor + '"]');
+                    if (swatchAlvo) swatchAlvo.click(); // muda a cor automaticamente
+                }
+            }
+
+            document.querySelectorAll('.size-btn[data-size]:not([data-tampa])').forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
+            const label = document.getElementById('selectedSize');
+            if (label) label.textContent = tam;
+            tamanhoSelecionado = tam;
+
+            atualizarEstadoBotoes();
+            atualizarPreco();
+        }
+
+        // Seleção de tampa
+        function selectTampa(el) {
+            document.querySelectorAll('.size-btn[data-tampa]').forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
+            const label = document.getElementById('selectedTampa');
+            if (label) label.textContent = el.dataset.size;
+            tampaSelecionada = el.dataset.size;
+
+            atualizarEstadoBotoes();
+            atualizarPreco();
+        }
+        function darLike(e, btn) {
+            e.preventDefault();
+            btn.classList.toggle('ativo');
+
+            const liked = btn.classList.contains('ativo');
+            const produtoId = btn.dataset.id;
+            const data = { produtoId };
+
+            if (liked) {
+                axios.post('/wishlist/adicionar', data).catch(err => console.error('erro ao adicionar:', err));
+            } else {
+             axios.post('/wishlist/remover', data).catch(err => console.error('erro ao remover:', err));
+            }
+        }
+        // Inicialização
+        atualizarEstadoBotoes();
+
+
+
+

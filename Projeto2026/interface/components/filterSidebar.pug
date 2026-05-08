@@ -1,0 +1,130 @@
+mixin filterSidebar(coresDisponiveis, FA, precoAbsolutoMin, precoAbsolutoMax, baseUrl)
+    // Seleção de cores
+    .filter-group
+        .filter-group-label(onclick='toggleGroup(this)')
+            span Cor
+            span.toggle-icon −
+        .filter-group-body
+            .color-options
+                each cor in coresDisponiveis
+                    - const isLight = ['#fff','#ffffff','white'].includes((cor.hex||'').toLowerCase())
+                    - const corAtiva = FA.cor === cor.hex
+                    a.color-swatch(
+                        href=baseUrl + '?' + buildQuery(FA, { cor: corAtiva ? null : cor.hex, page: null })
+                        style='background:' + cor.hex + (isLight ? ';border-color:#ddd' : '')
+                        title=cor.nome
+                        class=corAtiva ? 'active' : ''
+                    )
+    // Seleção de preço
+    .filter-group
+        .filter-group-label(onclick='toggleGroup(this)')
+            span Preço
+            span.toggle-icon −
+        .filter-group-body
+            .price-range-row
+                input.price-input(
+                    type='number' id='precoMinInput'
+                    value=FA.minPreco || precoAbsolutoMin
+                    min=precoAbsolutoMin max=precoAbsolutoMax
+                )
+                span.price-separator —
+                input.price-input(
+                    type='number' id='precoMaxInput'
+                    value=FA.maxPreco || precoAbsolutoMax
+                    min=precoAbsolutoMin max=precoAbsolutoMax
+                )
+    // Limpar filtros
+    a.filter-clear(href=baseUrl) Limpar filtros
+
+    style.
+        .filter-group {
+            border-top: 1px solid #eee;
+            padding: 1.1rem 0;
+        }
+
+        .filter-group-label {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--text-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+            margin-bottom: 0.85rem;
+        }
+
+        .filter-group-label .toggle-icon {
+            font-size: 1rem;
+            font-weight: 400;
+            color: #888;
+            transition: transform 0.2s;
+        }
+
+        .filter-group.collapsed .toggle-icon { transform: rotate(-90deg); }
+        .filter-group.collapsed .filter-group-body { display: none; }
+
+        .color-options { display: flex; flex-wrap: wrap; gap: 8px; }
+
+        .color-swatch {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.15s;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .color-swatch:hover { transform: scale(1.15); }
+
+        .color-swatch.active {
+            border-color: var(--text-color);
+            box-shadow: 0 0 0 2px #fff inset;
+        }
+
+        .price-range-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .price-input {
+            width: 100%;
+            border: 1px solid #ddd;
+            padding: 5px 8px;
+            font-size: 0.8rem;
+            font-family: inherit;
+            color: var(--text-color);
+            background: #fff;
+            border-radius: 2px;
+            -moz-appearance: textfield;
+        }
+
+        .price-input::-webkit-outer-spin-button,
+        .price-input::-webkit-inner-spin-button { -webkit-appearance: none; }
+
+        .price-separator { font-size: 0.75rem; color: #888; flex-shrink: 0; }
+
+        .filter-clear {
+            display: block;
+            width: 100%;
+            margin-top: 1.25rem;
+            padding: 8px 0;
+            background: none;
+            border: 1px solid var(--text-color);
+            font-size: 0.75rem;
+            font-family: inherit;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            color: var(--text-color);
+            transition: all 0.2s;
+            border-radius: 2px;
+            text-align: center;
+            text-decoration: none;
+        }
+        .filter-clear:hover { background: var(--text-color); color: #fff; }

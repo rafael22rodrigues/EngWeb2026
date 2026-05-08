@@ -1,0 +1,153 @@
+include confirmationPopUp.pug
+
+mixin table(headers, rows)
+  table.table
+    thead
+      tr
+        each header in headers
+          th= header
+    tbody
+      each row in rows
+        tr
+          each cell in row
+            td
+              if cell.img
+                div.image-wrap
+                  img(src=cell.img alt="Image" style="max-width: 100px; max-height: 100px;")
+              else if cell.link
+                  a.link(href=cell.link)
+                    if Array.isArray(cell.text)
+                      each item in cell.text
+                        div(style='color:rgba(0, 0, 0, 0.4);font-size:14px')= item
+                    else
+                      = cell.text
+              else if cell.cores
+                div(style='display:inline-block; justify-content: space-between;')
+                  each cor in cell.cores
+                    div.cores(style='background-color:' + cor + ';')
+              else if cell.text
+                if Array.isArray(cell.text)
+                  each item in cell.text
+                    div(style='color:rgba(0, 0, 0, 0.4);font-size:14px')= item
+                else
+                  = cell.text
+              else if cell.acoes 
+                div.acoes
+                  for a in cell.acoes
+                    if a.acao === 'edit'
+                      a.acao-button(href=a.link)
+                        img(src="/assets/edit-icon.svg" alt="Editar")
+                    else if a.acao === 'delete'
+                          button.delete.acao-button(type="button" onclick=`openPopup('${a.link}', 'form', 'Tem a certeza que deseja eliminar este item?')`)
+                            img(src="/assets/delete-icon.svg" alt="Eliminar")
+                    else if a.acao === 'check'
+                      form.acao-form(action=a.link method='POST')
+                        button#check.acao-button(type='submit')
+                          img(src="/assets/check-icon.svg" alt="Concluir")
+                    else if a.acao === 'view'
+                      a.acao-button(href=a.link)
+                        img(src="/assets/view-icon.svg" alt="Ver Detalhes")
+                    else if a.acao === 'cancel'
+                        button.delete.acao-button(type="button" onclick=`openPopup('${a.link}', 'form', 'Tem a certeza que deseja cancelar esta encomenda?')`)
+                          img(src="/assets/cross.png" alt="Cancelar")
+                    else if a.acao === 'deactivate'
+                          button.delete.acao-button(type="button" onclick=`openPopup('${a.link}', 'form', 'Tem a certeza que deseja desativar este utilizador?')`)
+                            img(src="/assets/deactivate.png" alt="Desativar")
+    +confirmationPopUp()
+
+
+
+  style.
+    .cores {
+      width:28px;
+      height:25px;
+      border-radius:5px;
+      margin-right:1px;
+      display:inline-block;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .image-wrap {
+      width: 80px;
+      height: 80px;
+      overflow: hidden;
+      padding: 5px;
+    }
+
+    .image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 5px;
+    }
+
+    .acoes {
+      display: flex;
+      gap: 10px;
+      padding: 5px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .delete-form {
+      margin: 0;
+      padding: 0;
+      display: inline-flex;
+    }
+    
+    .acao-form {
+      display: inline-flex;
+      margin: 0;
+    }
+
+    .acao-button {
+      display: inline-flex;
+      background-color: var(--main-color);
+      border: 0;
+      cursor: pointer;
+      width: 36px;
+      height: 36px;
+      min-width: 36px;
+      min-height: 36px;
+      padding: 0;
+      align-items: center;
+      justify-content: center;
+      line-height: 0;
+      flex: 0 0 36px;
+    }
+
+    .acao-button:hover {
+      background-color: var(--main-color-hover);
+    }
+
+    .delete {
+      background-color: #773d37c9;
+    }
+
+    .delete:hover {
+      background-color: #773d37;
+    }
+
+    .acao-button img {
+      width: 20px;
+      height: 20px;
+      object-fit: contain;
+      display: block;
+    }
+
+    a.link{
+      text-decoration: none;
+      display: block;
+    }
+    a.link :hover{
+      color: var(--main-color);
+    }
+
+    a.link div {
+      text-decoration: none;
+    }
+
+    a.link div:hover {
+      color: var(--main-color);
+    }

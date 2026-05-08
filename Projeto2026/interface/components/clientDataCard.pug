@@ -1,0 +1,129 @@
+mixin clientDataCard(nome, email, telefone, nif)
+  .client-data-card
+    h1.client-data-title Os meus dados
+
+    form.client-data-form(action="/perfil/editar" method="POST")
+      .form-group
+        label(for='nome') Nome
+        input#nome(type='text', name='nome', value=nome, readonly)
+
+      .form-group
+        label(for='email') Email
+        input#email(type='email', name='email', value=email, readonly)
+
+      .form-group
+        label(for='telefone') Telefone
+        input#telefone(type='text', name='telefone', value=telefone, readonly)
+
+      .form-group
+        label(for='nif') NIF
+        input#nif(type='text', name='nif', value=nif, readonly)
+
+      .actions
+        button.edit-btn(type='button')
+          img(src='/assets/formIcons/edit.png', alt='Editar')
+          | Editar
+
+        button.save-btn(type='submit' disabled)
+          img(src='/assets/formIcons/save.png', alt='Guardar')
+          | Guardar
+
+  style.
+    .client-data-card {
+      width: 700px;
+      max-height: 700px;
+      background: var(--form-bg);
+      padding: 34px 44px 28px 44px;
+      box-sizing: border-box;
+    }
+
+    .client-data-card * {
+      box-sizing: border-box;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text-color);
+    }
+
+    .client-data-title {
+      text-align: center;
+      font-size: 28px;
+      font-weight: 700;
+      margin: 0 0 34px 0;
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    .form-group input {
+      width: 100%;
+      height: 56px;
+      border: 1px solid #d9d9d9;
+      background: #fff;
+      padding: 0 16px;
+      font-size: 16px;
+      color: var(--text-color);
+      outline: none;
+    }
+
+    .form-group input.editable {
+      border: 1px solid var(--button-bg);
+      background: #fffdfb;
+    }
+
+    .actions button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .actions {
+      margin-top: 12px;
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .actions button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin: 8px auto 0 auto;
+      padding: 16px 28px;
+      background: var(--button-bg);
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      font-size: 20px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s ease;
+      width: 200px;
+      height: 50px;
+    }
+
+    .actions button:hover {
+      background: var(--button-hover);
+    }
+
+    .actions button img {
+      width: 20px;
+      height: 20px;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
+    }
+
+  script.
+    const editBtn = document.querySelector('.edit-btn');
+    const saveBtn = document.querySelector('.save-btn');
+    const inputs = document.querySelectorAll('.client-data-form input');
+
+    editBtn.addEventListener('click', () => {
+      inputs.forEach(input => input.removeAttribute('readonly'));
+      saveBtn.removeAttribute('disabled');
+    });

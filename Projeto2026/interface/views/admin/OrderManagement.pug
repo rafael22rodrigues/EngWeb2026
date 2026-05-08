@@ -1,0 +1,290 @@
+extends ../layout
+include ../../components/table.pug
+include ../../components/pagination.pug
+
+block content
+  main.main
+    section.page-card
+      .top-section
+        .page-card-header
+          .title
+            img(src="/assets/admin.png" alt="Admin Icon")
+            h1 Gestão de Encomendas
+          p Ver e cancelar encomendas feitas pelos clientes
+
+        .stats
+          div.stats-card 
+            .stats-card-content
+              img(src="/assets/box-icon.svg" alt="Produtos")
+              p=stats.total
+            p.stats-card-caption ENCOMENDAS
+          div.stats-card 
+            .stats-card-content
+              img(src="/assets/clock-icon.svg" alt="Produtos")
+              p=stats.pendentes
+            p.stats-card-caption PENDENTES
+          div.stats-card 
+            .stats-card-content
+              p=stats.concluidas
+            p.stats-card-caption CONCLUÍDAS
+          div.stats-card 
+            .stats-card-content
+              p=stats.canceladas
+            p.stats-card-caption CANCELADAS
+      div
+        form.filters(method="get" action="/admin/encomendas")
+            div.search
+                img(src="/assets/lupa-icon.svg" alt="Pesquisar")
+                input(type="text" name="search" placeholder="Pesquisar por número..." value=(filtros && filtros.search) || '')
+
+            div.right-section
+              div.filter-group
+                  label.input-label(for="order") Ordenar por:
+                  select.dropdown(name="sort" onchange="this.form.submit()")
+                      option(value="-data" selected=(filtros.sort === '-data')) Mais recente
+                      option(value="data" selected=(filtros.sort === 'data')) Menos recente
+                  
+              div.filter-group
+                  select.dropdown(name="estado" onchange="this.form.submit()")
+                    option(value="" selected=((filtros && filtros.estado) === '')) Todos os estados
+                    option(value="pendente" selected=((filtros && filtros.estado) === 'pendente')) Pendentes
+                    option(value="concluida" selected=((filtros && filtros.estado) === 'concluida')) Concluídas
+                    option(value="cancelada" selected=((filtros && filtros.estado) === 'cancelada')) Canceladas
+
+              div.filter-group
+                  label.input-label(for="dataInicio") Data:
+                  input.dropdown(style="height:25px;" type="date" name="dataInicio" onchange="this.form.submit()" value=(filtros && filtros.dataInicio) || '')
+                  span.input-label a 
+                  input.dropdown(style="height:25px;" type="date" name="dataFim"  onchange="this.form.submit()" value=(filtros && filtros.dataFim) || '')
+
+              a.button(href="/admin/encomendas")
+                img(style="width:23px" src="/assets/clear-filters.svg" alt="Limpar Filtros")
+                p Limpar
+
+      .table-wrapper
+        +table(['Encomenda Nr', 'Cliente', 'Data', 'Estado', 'Valor', 'Produtos', 'Ações'], rows)
+      +pagination(pagination)
+  
+  style. 
+    .main {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+
+    .page-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1.5rem;
+      width: 80%;
+    }
+
+    .top-section {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .page-card-header button {
+      height: 40px;
+      color: white;
+      outline: none;
+      border: none;
+      font-size: 14px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: left;
+      gap: 8px;
+      background: transparent;
+    }
+
+    .page-card-header button p {
+      margin: 0;
+      color: var(--main-color);
+      font-size: 17px;
+      font-weigth: 600;
+    }
+    .plus-icon {
+      width: 36px;
+      height: 36px;
+      background-color: var(--main-color);
+      color: var(--gray);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 32px;
+    }
+
+    .page-card-header {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .page-card-header h1 {
+      margin: 0;
+      font-size: 40px;
+      color: #3b3b3b;
+      font-weight: 700;
+    }
+
+    .page-card-header p {
+      margin: 0;
+      color: #5d524b;
+    }
+
+    .filters {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .table-wrapper {
+      max-width: 1600px;
+    }
+
+    .filter-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .right-section {
+      display: inline-flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .input-label {
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.65);
+    }
+    .dropdown {
+      height: 40px;
+      padding: 5px 10px;
+      border: 2px solid var(--main-color);
+      background-color: var(--gray);
+    }
+
+    .search {
+      padding: 5px 10px;
+      width: 400px;
+      border: 2px solid var(--main-color);
+      background-color: var(--gray);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      height: 30px;
+    }
+
+    .search img {
+      width: 25px;
+    }
+
+    .search input {
+      width: 100%;
+      height: 100%;
+      border: none;
+      outline: none;
+      background: transparent;
+    }
+    
+    .button {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      height: 30px;
+      padding: 5px 15px;
+      color: white;
+      background-color: var(--main-color);
+      outline: none;
+      border: none;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .button:hover {
+      background-color: var(--main-color-hover);
+      outline: none;
+
+    }
+    .filtros button img {
+      width: 16px;
+    }
+
+    .order-filtros{
+      display: inline-flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .stats {
+      width: 500px;
+      height: 100px;
+      color: white;
+      font-weight: 600;
+      font-size: 20px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      align-items: stretch;
+      gap: 10px;
+    }
+
+    .stats-card {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      height: 100%;
+      width: 100%;
+      box-sizing: border-box;
+      padding: 14px 0;
+      gap: 6px;
+    }
+
+    .stats-card img {
+      width: 28px;
+      opacity: 0.8;
+    }
+
+    .stats-card-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .stats-card-content p {
+      margin: 0;
+      font-size: 34px;
+      line-height: 1;
+      font-weight: 800;
+      color: rgba(0, 0, 0, 0.8);
+      text-align: center;
+    }
+
+    .stats-card-caption {
+      margin: 0;
+      color: rgba(0, 0, 0, 0.65);
+      text-align: center;
+      font-size: 13px;
+      line-height: 1.2;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .title {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .title img {
+      width: 40px;
+    }

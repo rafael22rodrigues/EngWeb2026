@@ -1,0 +1,641 @@
+extends ../layout
+include ../../components/confirmationPopUp.pug
+
+block content
+    - 
+        produto = produto || {};
+        produto.opcoes = produto.opcoes || {};
+        produto.opcoes.cores = produto.opcoes.cores || [];
+        produto.opcoes.tamanhos = produto.opcoes.tamanhos || [];
+        produto.opcoes.tampas = produto.opcoes.tampas || [];
+        produto.variantes = produto.variantes || [];
+        cores = cores || [];
+        categorias = categorias || [];
+
+    .edit-product
+        .page-header
+            h1= modo === 'novo' ? 'Adicionar Produto' : 'Editar Produto'
+            .page-actions
+                a.btn.btn-secondary(href="/admin/inventario") Cancelar
+                if modo !== 'novo'
+                    button.btn.btn-delete(onclick=`openPopup('/admin/produtos/${produto._id}/eliminar', 'form', 'Tem a certeza que quer eliminar este produto permanentemente?')`) Eliminar Produto
+
+                button.btn.btn-primary(type="submit" form="editProductForm")
+                    = modo === 'novo' ? 'Criar Produto' : 'Guardar Alterações'
+
+        form#editProductForm(
+            method="POST"
+            action= modo === 'novo' ? '/admin/produtos/novo' : `/admin/produtos/${produto._id}/editar`
+            enctype="multipart/form-data"
+        )
+            #error-message(style="display:none; color:#b00020; margin-bottom:16px; font-weight:600;")
+            section.card.product-info
+                .form-group
+                    label Nome do produto
+                    input(
+                        type="text" 
+                        name="nome" value=produto.nome || "" 
+                        required
+                        readonly=modo !== 'novo'
+                    )
+
+                - const categoriaExiste = categorias.some(categoria => categoria.id === produto.categoriaId)
+                .category-row
+                    .form-group.category-group
+                        label Categoria
+                        select#categoria(name="categoria" required)
+                            each categoria in categorias
+                                option(
+                                    value=categoria.id
+                                    selected=produto.categoriaId == categoria.id
+                                )= categoria.nome
+                            option(value="outra" selected=!categoriaExiste) Outra
+
+                    .form-group.other-category#otherCategoryGroup
+                        label Outra categoria
+                        input#novaCategoria(
+                            type="text"
+                            name="novaCategoria"
+                            placeholder="Nova categoria"
+                        )
+
+            - const coresProduto = produto.opcoes.cores
+            section.card
+                .section-header
+                    h3 Cores e imagens
+                    button.btn.btn-primary#addColorBtn(type="button") + Adicionar cor
+
+                .table-wrapper
+                    table.variants-table
+                        thead
+                            tr
+                                th Cor
+                                th Imagem
+                                th Foto Principal
+                                th 
+
+                        tbody#colorsBody
+                            each corProduto, index in coresProduto
+                                tr
+                                    td
+                                        - const corHex = corProduto._id
+                                        - const corNome = corProduto.label
+                                        - const corCatalogo = cores.find(cor => cor._id === corHex)
+                                        .color-fields
+                                            select.color-source-select(name=`cores[${index}][source]` required)
+                                                each cor in cores
+                                                    - const corId = cor._id
+                                                    option(
+                                                        value=corId
+                                                        data-hex=corId
+                                                        data-name=cor.label
+                                                        selected=corCatalogo && String(corId) === String(corHex)
+                                                    )= cor.label
+                                                option(value='outra' selected=!corCatalogo) Outra
+                                            .color-custom-fields
+                                                input.color-picker-input(
+                                                    type='color'
+                                                    name=`cores[${index}][id]`
+                                                    value=corHex
+                                                )
+                                                input(
+                                                    type='text'
+                                                    name=`cores[${index}][nome]`
+                                                    value=corNome
+                                                    placeholder='Nome da cor'
+                                                )
+
+                                    td
+                                        .image-cell
+                                            if corProduto.imagem
+                                                img(src=corProduto.imagem)
+                                            input(
+                                                type="hidden"
+                                                name=`cores[${index}][imagemAtual]`
+                                                value=corProduto.imagem || ''
+                                            )
+                                            input(
+                                                type="file"
+                                                name=`cores[${index}][imagem]`
+                                                accept="image/*"
+                                                required=modo === 'novo'
+                                            )
+
+                                    td.center
+                                        input(
+                                            type="radio"
+                                            name="imagemBase"
+                                            value=index
+                                            checked=(produto.imagemBase == corProduto.imagem)
+                                            required
+                                        )
+
+                                    td.center
+                                        button.delete-row-btn(type="button" aria-label="Eliminar cor")
+                                            img.delete-icon(src="/assets/delete-icon.svg" alt="Eliminar")
+            
+            section.card
+                .section-header
+                    h3 Variantes do produto
+                    button.btn.btn-primary#addVariantBtn(type="button") + Adicionar variante
+
+                .table-wrapper
+                    table.variants-table
+                        thead
+                            tr
+                                th Cor
+                                th Tamanho
+                                th Tampa
+                                th Referência
+                                th Preço
+                                th Stock
+                                th 
+
+                        tbody#variantsBody
+                            each variante, index in produto.variantes
+                                - const vCor = variante.atributos.cor
+                                - const vTamanho = variante.atributos.tamanho || ''
+                                - const vTampa = variante.atributos.tampa || ''
+                                tr
+                                    td
+                                        select(name=`variantes[${index}][corId]` required)
+                                            each cor in coresProduto
+                                                - const corId = cor._id
+                                                - const corNome = cor.label
+                                                option(
+                                                    value=corId
+                                                    selected=(vCor == corId)
+                                                ) #{corNome}
+
+                                    td
+                                        input(
+                                            type="text"
+                                            name=`variantes[${index}][tamanho]`
+                                            value=vTamanho
+                                        )
+
+                                    td
+                                        input(
+                                            type="text"
+                                            name=`variantes[${index}][tampa]`
+                                            value=vTampa
+                                        )
+
+                                    td
+                                        input(
+                                            type="text"
+                                            name=`variantes[${index}][sku]`
+                                            value=variante.sku
+                                            required
+                                        )
+
+                                    td
+                                        input(
+                                            type="number"
+                                            step="0.01"
+                                            min="0"
+                                            name=`variantes[${index}][preco]`
+                                            value=variante.preco
+                                            required
+                                        )
+
+                                    td
+                                        input(
+                                            type="number"
+                                            min="0"
+                                            name=`variantes[${index}][stock]`
+                                            value=variante.stock
+                                            required
+                                        )
+
+                                    td.center
+                                        button.delete-row-btn(type="button" aria-label="Eliminar variante")
+                                            img.delete-icon(src="/assets/delete-icon.svg" alt="Eliminar")
+        +confirmationPopUp()
+
+
+    style.
+        .edit-product {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'DM Sans', sans-serif;
+            background: #FFFFFF;
+            color: var(--text-color);
+        }
+
+        .page-header {
+            margin: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .page-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .edit-product .card {
+            background: #fff;
+            border: 1px solid #e6ddd5;
+            border-radius: 12px;
+            padding: 24px;
+            margin: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .category-row {
+            display: flex;
+            flex-direction: row;
+            gap: 14px;
+        }
+
+        .category-group,
+        .other-category {
+            flex: 1;
+            min-width: 240px;
+        }
+
+        .edit-product input,
+        .edit-product select {
+            height: 42px;
+            border: 1px solid #e6ddd5;
+            border-radius: 6px;
+            padding: 0 12px;
+            background: white;
+        }
+
+        .edit-product input:disabled {
+            cursor: not-allowed;
+        }
+
+        .edit-product .btn {
+            border-radius: 6px;
+            padding: 12px 24px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: var(--button-bg);
+            border: none;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--button-hover);
+        }
+
+        .btn-secondary {
+            background: #ffffff;
+            border: none;
+            color: var(--button-hover);
+            border: 2px solid var(--button-hover);
+            text-decoration: none;
+            margin: 0;
+        }
+
+        .btn-secondary:hover {
+            background: var(--button-hover);
+            color: white;
+            text-decoration: none;
+        }
+
+        .btn-delete {
+            border: none;
+            background: #C28181;
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background: #d36363;
+        }
+
+        .variants-table {
+            width: 100%;
+            border-collapse: collapse;
+            border-left: 1px solid #e6ddd5;
+            border-right: 1px solid #e6ddd5;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .variants-table th {
+            background: #e6ddd5;
+            text-align: center;
+            padding: 14px;
+        }
+
+        .variants-table td {
+            padding: 10px 14px;
+            text-align: center;
+        }
+
+        .variants-table input,
+        .variants-table select {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .color-fields {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .color-source-select {
+            width: 100%;
+        }
+
+        .color-custom-fields {
+            display: flex;
+            flex-direction: row;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .color-picker-input {
+            max-width: 64px;
+            cursor: pointer;
+        }
+
+        .image-cell {
+            display: flex;
+            flex-direction: row;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .image-cell img {
+            width: 64px;
+            height: 64px;
+            border-radius: 6px;
+            object-fit: cover;
+        }
+
+        .variants-table input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--button-bg);
+            cursor: pointer;
+        }
+
+        .delete-row-btn {
+            width: 38px;
+            height: 38px;
+            background: #C28181;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .delete-icon {
+            width: 22px;
+            height: 22px;
+            object-fit: contain;
+        }
+
+    script.
+        document.addEventListener('DOMContentLoaded', function () {
+            const categoriaSelect = document.getElementById('categoria');
+            const otherCategoryGroup = document.getElementById('otherCategoryGroup');
+            const novaCategoriaInput = document.getElementById('novaCategoria');
+            const addColorBtn = document.getElementById('addColorBtn');
+            const colorsBody = document.getElementById('colorsBody');
+            const addVariantBtn = document.getElementById('addVariantBtn');
+            const variantsBody = document.getElementById('variantsBody');
+            const cores = !{JSON.stringify(cores.map(function (cor) { return { id: cor._id, nome: cor.label }; }))};
+
+            function getColorRowFields(row) { // retorna os elementes de uma cor
+                return {
+                    sourceSelect: row.querySelector('select[name*="[source]"]'), // select para escolher cor do catálogo ou "outra"
+                    hexInput: row.querySelector('input[type="color"]'), // input hex
+                    nameInput: row.querySelector('input[name*="[nome]"]'), // input nome da cor
+                    container: row.querySelector('.color-fields') // para bloquear os inputs quando não for "outra"
+                };
+            }
+
+            function updateBlockColors(row) { // se o select da cor for "outra", desbloqueia os inputs de hex e nome
+                const { sourceSelect, hexInput, nameInput, container } = getColorRowFields(row);
+
+                const isOutra = sourceSelect.value === 'outra';
+                if (isOutra) {
+                    hexInput.disabled = false;
+                    nameInput.readOnly = false;
+                    nameInput.required = true;
+                    container.classList.remove('is-locked');
+                } else {
+                    const opt = sourceSelect.options[sourceSelect.selectedIndex];
+                    hexInput.value = opt.dataset.hex;
+                    nameInput.value = opt.dataset.name;
+                    hexInput.disabled = true;
+                    nameInput.readOnly = true;
+                    nameInput.required = false;
+                    container.classList.add('is-locked');
+                }
+            }
+
+            function getColorRowsData() { //pega nas cores escritas na UI e retorna um array de objetos
+                return Array.from(colorsBody.querySelectorAll('tr')).map(function (row) {
+                    const { sourceSelect, hexInput, nameInput } = getColorRowFields(row);
+
+                    const isOutra = sourceSelect.value === 'outra';
+
+                    if (isOutra) {
+                        const id = hexInput.value.toUpperCase();
+                        const nome = nameInput.value.trim();
+                        return {
+                            id: id,
+                            label: nome ? nome + ' (' + id + ')' : id
+                        };
+                    }
+                    const selectedOption = sourceSelect.options[sourceSelect.selectedIndex];
+                    const id = selectedOption.dataset.hex.toUpperCase();
+                    const nome = selectedOption.dataset.name;
+
+                    return {
+                        id: id,
+                        label: nome
+                    };
+                });
+            }
+
+            function getColorOptionsForSelect(selectedValue) { // gera o html dos selects de cor das variantes
+                const data = getColorRowsData();
+                if (data.length === 0) {
+                    return `<option value="">Sem cores disponíveis</option>`;
+                }
+
+                return data.map(cor =>
+                    `<option value="${cor.id}" ${selectedValue == cor.id ? 'selected' : ''}>
+                        ${cor.label}
+                    </option>`
+                ).join('');
+            }
+
+            function refreshVariantColorSelects() { // atualiza os selects quando as cores sao alteradas em cima
+                variantsBody.querySelectorAll('select[name*="[corId]"]').forEach(select => {
+                    const previousValue = select.value;
+                    select.innerHTML = getColorOptionsForSelect(previousValue);
+                });
+            }
+
+            function toggleNovaCategoria() { // mostra ou esconde a nova categoria se a categoria for "outra"
+                const mostrar = categoriaSelect.value === 'outra';
+                novaCategoriaInput.required = mostrar;
+                novaCategoriaInput.disabled = !mostrar;
+            }
+
+            function updateImagePreview(fileInput) {
+            const file = fileInput.files[0]; // img nova
+
+            if (!file) return;
+
+            const imageCell = fileInput.closest('tr').querySelector('.image-cell'); // cell da img
+
+            let img = imageCell.querySelector('img'); // se ja tiver uma img na cell usa, senao substitui
+
+            if (!img) {
+                img = document.createElement('img');
+                imageCell.prepend(img);
+            }
+
+            img.src = URL.createObjectURL(file);
+        }
+
+            function addEmptyVariantRow() { // adiciona uma linha vazia ao add variante
+                const index = variantsBody.querySelectorAll('tr').length;
+                const firstColor = getColorRowsData()[0]?.id;
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>
+                        <select name="variantes[${index}][corId]" required>
+                            ${getColorOptionsForSelect(firstColor)}
+                        </select>
+                    </td>
+                    <td><input type="text" name="variantes[${index}][tamanho]" placeholder="ex: Pequeno"></td>
+                    <td><input type="text" name="variantes[${index}][tampa]" placeholder="ex: Ramo"></td>
+                    <td><input type="text" name="variantes[${index}][sku]" placeholder="ex: PT6331" required></td>
+                    <td><input type="number" step="0.01" min="0" name="variantes[${index}][preco]" placeholder="ex: 26.00" required></td>
+                    <td><input type="number" min="0" name="variantes[${index}][stock]" placeholder="ex: 2" required></td>
+                    <td class="center">
+                        <button class="delete-row-btn" type="button">
+                            <img class="delete-icon" src="/assets/delete-icon.svg" alt="Eliminar">
+                        </button>
+                    </td>
+                `;
+
+                variantsBody.appendChild(tr);
+            }
+
+            function addEmptyColorRow() { // adiciona uma linha vazia ao add cor
+                const index = colorsBody.querySelectorAll('tr').length;
+                const colorOptions = cores.map((cor, idx) => `
+                    <option 
+                        value="${cor.id}" 
+                        data-hex="${cor.id}" 
+                        data-name="${cor.nome}" 
+                        ${idx === 0 ? 'selected' : ''}
+                    >
+                        ${cor.nome}
+                    </option>
+                `).join('');
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>
+                        <div class="color-fields">
+                            <select class="color-source-select" name="cores[${index}][source]" required>
+                                ${colorOptions}
+                                <option value="outra">Outra</option>
+                            </select>
+                            <div class="color-custom-fields">
+                                <input class="color-picker-input" type="color" name="cores[${index}][id]" value="#ffffff">
+                                <input type="text" name="cores[${index}][nome]" placeholder="Nome da cor">
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="image-cell">
+                            <input type="file" name="cores[${index}][imagem]" accept="image/*" required>
+                        </div>
+                    </td>
+                    <td class="center"><input type="radio" name="imagemBase" value="${index}" required></td>
+                    <td class="center">
+                        <button class="delete-row-btn" type="button" aria-label="Eliminar cor">
+                            <img class="delete-icon" src="/assets/delete-icon.svg" alt="Eliminar">
+                        </button>
+                    </td>
+                `;
+
+                colorsBody.appendChild(tr);
+                updateBlockColors(tr);
+                refreshVariantColorSelects();
+            }
+
+        function setupDeleteRow(tbody, onRowDeleted) {
+            tbody.addEventListener('click', (event) => {
+                const row = event.target.closest('.delete-row-btn')?.closest('tr');
+                if (!row) return;
+
+                openPopup(() => { 
+                    row.remove(); 
+                    if (onRowDeleted) onRowDeleted();
+                    }, 'func', 'Tem a certeza que deseja eliminar?');
+            });
+        }
+            
+            toggleNovaCategoria();
+            addColorBtn.addEventListener('click', addEmptyColorRow);
+            addVariantBtn.addEventListener('click', addEmptyVariantRow);
+            categoriaSelect.addEventListener('change', toggleNovaCategoria);
+            colorsBody.addEventListener('input', function (event) {
+                if (event.target.matches('input[type="color"], input[name*="[nome]"]')) {
+                    refreshVariantColorSelects();
+                }
+            });
+            colorsBody.addEventListener('change', function (event) {
+                if (event.target.matches('select[name*="[source]"]')) {
+                    const row = event.target.closest('tr');
+                    updateBlockColors(row);
+                    refreshVariantColorSelects();
+                }
+            });
+            colorsBody.addEventListener('change', function (event) {
+                if (event.target.matches('input[type="file"][name*="[imagem]"]')) {
+                    updateImagePreview(event.target);
+                }
+            });
+            colorsBody.querySelectorAll('tr').forEach(updateBlockColors);
+            refreshVariantColorSelects();
+            setupDeleteRow(colorsBody, refreshVariantColorSelects);
+            setupDeleteRow(variantsBody);
+
+            const form = document.getElementById('editProductForm');
+
+            form.addEventListener('submit', function (event) {
+                const temCores = colorsBody.querySelectorAll('tr').length > 0;
+                const temVariantes = variantsBody.querySelectorAll('tr').length > 0;
+
+                if (!temCores || !temVariantes) {
+                    event.preventDefault();
+                    alert('É obrigatório ter pelo menos uma cor e uma variante.');
+                }
+            });
+        });

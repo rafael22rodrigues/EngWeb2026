@@ -1,0 +1,149 @@
+extends ../layout
+include ../../components/pagination
+include ../../components/productCard
+
+block content
+    - const favIds = JSON.stringify(favoritosIds || [])
+    .search-hero
+        h1 Resultados para #[em "#{termo}"]
+
+    .shop-page
+        if produtos.length === 0
+            .no-results
+                p Não encontrámos resultados para "#{termo}".
+                a(href='/produtos') Ver todos os produtos
+
+        else
+            .shop-toolbar
+                span.shop-results= totalProdutos + ' resultado' + (totalProdutos !== 1 ? 's' : '')
+
+            .produtos-grid
+                each produto in produtos
+                    +productCard(produto)
+
+            +pagination(pagination)
+    
+    style.
+        .shop-page {
+            padding: 2rem 4rem;
+        }
+
+        .search-hero {
+            padding: 2rem 4rem 1.5rem;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 2rem;
+        }
+
+        .search-hero h1 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin: 0 0 0.25rem;
+        }
+
+        .search-hero h1 em {
+            font-style: normal;
+            color: #888;
+        }
+
+        .search-hero p {
+            font-size: 0.85rem;
+            color: #888;
+            margin: 0;
+        }
+
+        .shop-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .shop-results { font-size: 0.85rem; color: #555; }
+
+        .shop-sort {
+            border: 1px solid #ccc;
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            font-family: inherit;
+            background: #fff;
+            cursor: pointer;
+            border-radius: 2px;
+        }
+
+        .produtos-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .produto-card {
+            text-decoration: none;
+            color: var(--text-color);
+            position: relative;
+        }
+
+        .produto-imgs {
+            width: 100%;
+            aspect-ratio: 1;
+            overflow: hidden;
+            background: #f5f0eb;
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+        }
+
+        .produto-imgs img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .produto-card:hover .produto-imgs img { transform: scale(1.04); }
+
+        .produto-dots { display: flex; gap: 5px; margin: 0.4rem 0; }
+
+        .produto-dot {
+            width: 10px; height: 10px;
+            border-radius: 50%;
+            border: 1px solid rgba(0,0,0,0.1);
+            display: inline-block;
+        }
+
+        .produto-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+
+        .produto-nome { font-weight: 700; font-size: 0.9rem; }
+        .produto-preco { color: var(--text-color); font-size: 0.9rem; }
+
+        .no-results {
+            text-align: center;
+            padding: 5rem 0;
+            color: #888;
+        }
+
+        .no-results p {
+            font-size: 0.95rem;
+            margin: 0 0 1rem;
+        }
+
+        .no-results a {
+            font-size: 0.8rem;
+            color: var(--text-color);
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-decoration: underline;
+        }
+        
+    script.
+        const FAVORITOS = new Set(!{favIds});
+    
+        document.querySelectorAll('.produto-like').forEach(btn => {
+            if (FAVORITOS.has(btn.dataset.id)) {
+                btn.classList.add('ativo');
+            }
+        });

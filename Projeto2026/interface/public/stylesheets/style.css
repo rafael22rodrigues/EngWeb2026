@@ -1,0 +1,72 @@
+:root {
+    --main-color: #A38A75;
+    --secondary-color: #A89891;
+    --main-color-hover: #9a816d;
+    --accent-color: #E3C9B9;
+    --gray: #F2F2F2;
+    --background: white;
+    --text-color: #2b2420;
+    --text-color-light: #888;
+    --button-bg: #947458;
+    --button-hover: #7e6046;
+    --form-bg: #f6f4f2;
+}
+
+html, body {
+    height: 100%;
+    min-height: 100%
+}
+
+body.layout {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--text-color);
+    background: #ffffff;
+}
+
+.content {
+    min-height: 80vh;
+}
+
+.table {
+    width: 100%;
+    border-spacing: 0;
+    border-collapse: separate;
+}
+
+.table th, td {
+    border-bottom: 3px solid #ffffff;
+    padding: 8px;
+    text-align: left;
+    padding: 10px;
+}
+
+.table thead {
+    background: linear-gradient(160deg, #b79f8c 0%, #9a816d 100%);
+    padding: 0 20px;
+}
+
+.table th {
+    background: transparent;
+    color: white;
+    text-align: center;
+    font-weight: 800;
+    font-size: 17px;
+    height: 50px;
+    padding: 0 20px;
+    opacity: 0.9;
+}
+
+.table td {
+    background-color: var(--gray);
+    color: rgba(0, 0, 0, 0.7);
+    text-align: center;
+    font-weight: 600;
+    font-size: 17px;
+    height: 75px;
+    font-family: Ubuntu;
+}
+.table tbody tr:hover td{
+    background-color: #d6d6d6;
+    color: rgba(0, 0, 0, 0.8);
+}

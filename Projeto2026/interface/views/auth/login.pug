@@ -1,0 +1,30 @@
+include ../../components/formCard.pug
+
+doctype html
+html
+  head
+    style.
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      .login-page {
+        min-height: 100vh;
+        background: url('/assets/background/bg-auth.png') center / cover no-repeat;
+        display: flex;
+        align-items: center;
+      }
+
+  body
+    .login-page
+      +formCard(
+        'Iniciar sessão',
+        'Ainda não tem uma conta?',
+        'Criar conta',
+        '/signup',
+        'Iniciar sessão',
+        'login',
+        '/login',
+        error
+      )

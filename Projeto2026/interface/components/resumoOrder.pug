@@ -1,0 +1,95 @@
+mixin resumoOrder(totalProdutos = 0, total = 0, btnText = 'Finalizar Compra →', btnLink = '/pagamento', isSubmit = false, disabled = false)
+    .card
+        h2 Resumo da Encomenda 
+        .info 
+            p.total Total de Produtos: #{totalProdutos}
+            p.nota *O levantamento da encomenda é feito apenas em loja.
+
+        .preco
+            p Total: 
+            p.num= total.toFixed(2) + "€"
+
+        if disabled
+            button.checkout-btn.checkout-btn-disabled(type="button" disabled)= btnText
+        else if isSubmit
+            button.checkout-btn(type="submit")= btnText
+        else
+            a.checkout-btn(href=btnLink)= btnText
+
+    style.
+        .card {
+            border: 1px solid #000;
+            background: #FFF;
+            border-radius: 8px;
+            padding: 80px 40px;
+            max-width: 400px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .card h2 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            border-top: 1px solid #000;
+            border-bottom: 1px solid #000;
+            padding: 20px 0;
+        }
+
+        .total {
+            font-size: 17px;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .nota {
+            font-size: 15px;
+            color: rgba(0, 0, 0, 0.45);
+            margin: 0;
+            font-weight: 400;
+        }
+
+        .checkout-btn {
+            display: inline-block;
+            padding: 15px;
+            background-color: var(--main-color);
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            text-align: center;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .checkout-btn:disabled {
+            background-color: #b8b8b8;
+            color: #fff;
+            cursor: not-allowed;
+            pointer-events: none;
+            opacity: 0.75;
+        }
+
+        .checkout-btn:hover {
+            background-color: var(--main-color-hover);
+        }
+
+        .preco {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .num {
+            font-size: 24px;
+            font-weight: 700;
+        }

@@ -1,0 +1,50 @@
+mixin pagination(pagination)
+  .pagination
+    if pagination.page > 1
+      a.page-box(href=pagination.prevUrl) < Anterior 
+    for i in pagination.pages
+      if i.n === pagination.page
+        span.page-box#selected= i.n
+      else
+        a.page-box(href=i.url)= i.n
+    if pagination.page < pagination.totalPages
+      a.page-box(href=pagination.nextUrl) Próxima >
+
+  style.
+    .pagination {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+    }
+
+    .page-box {
+        display: inline-flex;
+        padding: 6px 13px;
+        justify-content: center;
+        align-items: center;
+        color: rgba(0, 0, 0, 0.60);
+        font-family: Ubuntu;
+        font-size: 17px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+        border: 2px solid var(--main-color);
+        text-decoration: none;
+        background-color: var(--gray);
+    }
+
+    .page-box:hover {
+        background-color: var(--main-color-hover);
+        color: #fff;
+    }
+
+    .page-box#selected {
+        background-color: var(--main-color);
+        color: #fff;
+    }
+
+    .page-box#selected:hover {
+        background-color: var(--main-color);
+        color: #fff;
+    }

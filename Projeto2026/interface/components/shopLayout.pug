@@ -1,0 +1,95 @@
+include ./pagination
+include ./productCard
+include ./filterSidebar
+
+mixin shopLayout(coresDisponiveis, FA, precoAbsolutoMin, precoAbsolutoMax, baseUrl, pagination)
+    // Sidebar de filtros
+    aside.shop-filters
+        p.filter-title Filtros
+        +filterSidebar(coresDisponiveis, FA, precoAbsolutoMin, precoAbsolutoMax, baseUrl)
+    //  Área de produtos
+    .shop-main
+        .shop-toolbar
+            a.view-all-btn(href='/produtos') Ver todos
+            select.shop-sort(onchange='aplicarSort(this.value)')
+                option(value='' selected=!FA.sort) Mais recentes
+                option(value='preco_asc' selected=FA.sort==='preco_asc') Preço: mais barato
+                option(value='preco_desc' selected=FA.sort==='preco_desc') Preço: mais caro
+
+        .produtos-grid
+            if produtos.length === 0
+                    p.no-results Nenhum produto corresponde aos filtros selecionados.
+            else
+                each produto in produtos
+                    +productCard(produto)
+
+        +pagination(pagination)
+
+    style. 
+        .shop-filters {
+            position: sticky;
+            top: 1.5rem;
+        }
+
+        .filter-title {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-color);
+            margin: 0 0 1.25rem;
+        }
+        
+        .shop-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .view-all-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--text-color);
+            background: #fff;
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 7px 14px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-radius: 2px;
+            transition: all 0.2s ease;
+        }
+
+        .view-all-btn:hover {
+            background: var(--text-color);
+            color: #fff;
+        }
+
+        .shop-results { font-size: 0.85rem; color: #555; }
+
+        .shop-sort {
+            border: 1px solid #ccc;
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            font-family: inherit;
+            background: #fff;
+            cursor: pointer;
+            border-radius: 2px;
+        }
+
+        .produtos-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 4rem 0;
+            color: #888;
+            font-size: 0.9rem;
+        }

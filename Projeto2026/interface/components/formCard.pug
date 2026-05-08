@@ -1,0 +1,193 @@
+mixin formCard(title, subtitleText, subtitleLinkText, subtitleLinkHref, buttonText, formType, action, error)
+  -
+    const cardClass =
+      formType === 'login'
+        ? 'form-card form-card--login'
+        : formType === 'signup'
+          ? 'form-card form-card--signup'
+          : 'form-card form-card--contact'
+
+  div(class=cardClass)
+    h1.form-title= title
+
+    if subtitleText || subtitleLinkText
+      p.form-subtitle
+        | #{subtitleText}
+        if subtitleLinkText
+          a(href=subtitleLinkHref)= subtitleLinkText
+
+    form.custom-form(method='POST', action=action)
+      if formType === 'login'
+        .form-group
+          label(for='email') Email
+          input#email(type='email', name='email', placeholder='Insira o seu email')
+
+        .form-group
+          label(for='password') Palavra-passe
+          input#password(type='password', name='password', placeholder='Insere a tua palavra-passe')
+
+      else if formType === 'signup'
+        .form-row
+          .form-group
+            label(for='nome') Nome
+            input#nome(type='text', name='nome', placeholder='Insira o seu nome' required)
+
+          .form-group
+            label(for='telefone') Telefone
+            input#telefone(type='text', name='telefone', placeholder='Insira o seu número')
+
+        .form-group
+          label(for='email') Email
+          input#email(type='email', name='email', placeholder='Insira o seu email' required)
+        
+        .form-group 
+          label(for='password') Palavra-passe
+          input#password(type='password', name='password', placeholder='Insere a tua palavra-passe' required)
+
+        .form-group
+          label(for='nif') NIF
+          input#nif(type='text', name='nif', placeholder='Insira o NIF')
+
+      else if formType === 'contact'
+        .form-row
+          .form-group
+            label(for='nome') Nome
+            input#nome(type='text', name='nome', placeholder='Insira o seu nome' required)
+
+          .form-group
+            label(for='telefone') Telefone
+            input#telefone(type='text', name='telefone', placeholder='Insira o seu número')
+
+        .form-group
+          label(for='email') Email
+          input#email(type='email', name='email', placeholder='Insira o seu email' required)
+
+        .form-group
+          label(for='mensagem') Mensagem
+          textarea#mensagem(name='mensagem', placeholder='Escreva a mensagem...' required)
+
+      if error
+        p.form-error= error
+
+      button.form-btn(type='submit')= buttonText
+
+  style.
+    .form-card {
+      display: flex;
+      flex-direction: column;
+      background: #ffffff;
+      width: 100%;
+      margin-left: 30px;
+      padding: 40px 60px;
+      box-sizing: border-box;
+    }
+
+    .form-card * {
+      box-sizing: border-box;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text-color);
+    }
+
+    .form-card--login {
+      width: 718px;
+      min-height: 495px;
+    }
+
+    .form-card--signup {
+      width: 718px;
+      min-height: 546px;
+    }
+
+    .form-card--contact {
+      width: 580px;
+      min-height: 592px;
+    }
+
+    .form-title {
+      font-size: 28px;
+      font-weight: 700;
+      text-align: center;
+      margin: 0 0 18px 0;
+    }
+
+    .form-subtitle {
+      text-align: center;
+      font-size: 12px;
+      color: #888;
+      font-weight: 400;
+      letter-spacing: 0.4px;
+      margin: 0 0 30px 0;
+    }
+
+    .form-subtitle a {
+      color: #947458;
+      text-decoration: none;
+      margin-left: 4px;
+    }
+
+    .form-subtitle a:hover {
+      text-decoration: underline;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    .custom-form label {
+      display: block;
+      font-size: 16px;
+      margin-bottom: 6px;
+      color: var(--text-color);
+    }
+
+    .custom-form input,
+    .custom-form textarea {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid #d0d0d0;
+      border-radius: 3px;
+      color: #333;
+      outline: none;
+      font-size: 16px;
+      background: #fff;
+    }
+
+    .custom-form input::placeholder,
+    .custom-form textarea::placeholder {
+      color: #bbb;
+      font-size: 16px;
+    }
+
+    .custom-form input:focus,
+    .custom-form textarea:focus {
+      border-color: #947458;
+    }
+
+    .custom-form textarea {
+      min-height: 130px;
+      resize: none;
+    }
+
+    .form-btn {
+      display: block;
+      margin: 8px auto 0 auto;
+      padding: 16px 28px;
+      background: #947458;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      font-size: 20px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .form-btn:hover {
+      background: #7e6046;
+    }

@@ -1,0 +1,117 @@
+extends ../layout
+include ../../components/shopLayout
+
+block content
+    - const FA = filtrosAtivos || {}
+    - const baseUrl = '/produtos'
+    - const favIds = JSON.stringify(favoritosIds || [])
+
+    .shop-categories
+        each cat in categorias
+            a.shop-category-item(href='/categoria/' + cat.slug)
+                .cat-info
+                    span.cat-nome= cat.nome
+
+    .shop-page
+        .shop-layout
+            +shopLayout(coresDisponiveis, FA, precoAbsolutoMin, precoAbsolutoMax, baseUrl, pagination)
+
+    div#shop-data(
+        style='display:none'
+        data-filtros=JSON.stringify(filtrosAtivos || {})
+        data-preco-min=precoAbsolutoMin
+        data-preco-max=precoAbsolutoMax
+        data-base-url=baseUrl
+    )
+
+    style.
+        .shop-page {
+            padding: 2rem 4rem;
+        }
+
+        .shop-categories {
+            display: flex;
+            gap: 2.5rem;
+            padding: 1.5rem 4rem;
+            border-bottom: 1px solid #eee;
+            border-top: 1px solid #eee;
+            margin-bottom: 2rem;
+            overflow-x: auto;
+            justify-content: center;
+        }
+
+        .shop-category-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text-color);
+            white-space: nowrap;
+            transition: opacity 0.2s;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .shop-category-item:hover { opacity: 0.6; }
+
+        .shop-category-item .cat-info { display: flex; flex-direction: column; }
+        .shop-category-item .cat-nome { font-weight: 600; font-size: 0.9rem; }
+        .shop-category-item .cat-count { font-size: 0.75rem; color: #888; }
+
+        .shop-layout {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            gap: 2.5rem;
+            align-items: start;
+        }
+
+    script.
+        const FAVORITOS = new Set(!{favIds});
+    
+        document.querySelectorAll('.produto-like').forEach(btn => {
+            if (FAVORITOS.has(btn.dataset.id)) {
+                btn.classList.add('ativo');
+            }
+        });
+        const _sd    = document.getElementById('shop-data').dataset;
+        const FA_JS  = JSON.parse(_sd.filtros);
+        const P_MIN  = Number(_sd.precoMin);
+        const P_MAX  = Number(_sd.precoMax);
+        const BASE = _sd.baseUrl;
+
+        function buildQuery(base, overrides = {}) {
+            return new URLSearchParams(
+                Object.entries({ ...base, ...overrides })
+                    .filter(([, v]) => v != null && v !== '')
+                ).toString();
+        }
+
+        // Ordenar
+        function aplicarSort(val) {
+            window.location.href = BASE + '?' + buildQuery(FA_JS, { sort: val || null, page: null });
+        }
+
+        // Grupos colapsáveis
+        function toggleGroup(label) {
+            const g = label.closest('.filter-group');
+            g.classList.toggle('collapsed');
+            label.querySelector('.toggle-icon').textContent = g.classList.contains('collapsed') ? '+' : '−';
+        }
+        const inputMin = document.getElementById('precoMinInput');
+        const inputMax = document.getElementById('precoMaxInput');
+
+        function navigatePreco() {
+            const lo = +inputMin.value;
+            const hi = +inputMax.value;
+            window.location.href = BASE + '?' + buildQuery(FA_JS, {
+                minPreco: lo > P_MIN ? lo : null,
+                maxPreco: hi < P_MAX ? hi : null,
+                page: null
+            });
+        }
+
+        inputMin.addEventListener('change', navigatePreco);
+        inputMax.addEventListener('change', navigatePreco);
+        inputMin.addEventListener('keydown', e => e.key === 'Enter' && navigatePreco());
+        inputMax.addEventListener('keydown', e => e.key === 'Enter' && navigatePreco());
+

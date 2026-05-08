@@ -1,0 +1,353 @@
+extends ../layout
+
+include ../../components/productCard
+
+block content
+    - const favIds = JSON.stringify(favoritosIds || [])
+    - const img0 = JSON.stringify(produtos[0] ? produtos[0].imagemBase : '')
+    - const img4 = JSON.stringify(produtos[4] ? produtos[4].imagemBase : '')
+    - const img6 = JSON.stringify(produtos[6] ? produtos[6].imagemBase : '')
+
+    section.hero#heroCarousel
+        button.hero-arrow.hero-arrow-left(id='heroArrowLeft' aria-label='Slide anterior') ‹
+        .hero-content
+            span.hero-badge#heroBadge Novidade
+            h1#heroTitle Crie ambientes#[br] que contam a sua história
+            p#heroDesc Da sala ao quarto, encontre peças decorativas que otrnam cada canto mais acolhedor, elegante e especial.
+            a.btn-hero#heroBtn(href='/produtos') Comprar agora
+            .hero-dots#heroDots
+                span.dot.active
+                span.dot
+                span.dot
+        .hero-image
+            img#heroImg(src=produtos[0].imagemBase alt='Produto destaque')
+        button.hero-arrow.hero-arrow-right(id='heroArrowRight' aria-label='Próximo slide') ›
+
+    
+    section.section-categorias
+        .section-header
+            h2 Compra por Categorias
+            a.ver-todos(href='/produtos') Ver todos
+        .categorias-grid
+            each cat in categorias
+                a.categoria-card(href='/categoria/' + cat.slug)
+                    .categoria-img
+                        img(src=cat.imagem alt=cat.nome)
+                    span.categoria-nome= cat.nome
+
+    section.section-produtos
+        .section-header
+            h2 Mais vendidos
+            a.ver-todos(href='/produtos') Ver todos
+        .produtos-grid
+            each produto in produtos
+                +productCard(produto)
+
+    style.
+        .hero {
+            background: linear-gradient(135deg, #1a1a1a 0%, #3a2e28 60%, #6b4f3a 100%);
+            min-height: 380px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 3rem 4rem;
+            overflow: hidden;
+            transition: background 0.6s ease;
+        }
+
+        .hero-content { padding-left: 8rem;flex: 1; color: #fff; }
+
+        .hero-badge {
+            background: rgba(255,255,255,0.15);
+            color: #fff;
+            font-size: 0.75rem;
+            padding: 4px 14px;
+            border-radius: 3px;
+            display: inline-block;
+            margin-bottom: 1.2rem;
+            letter-spacing: 1px;
+        }
+
+        .hero-content h1 {
+            font-size: 2.4rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .hero-content p {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+            max-width: 300px;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .btn-hero {
+            background: var(--castanho, #7D5A35);
+            color: #fff;
+            padding: 12px 28px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            display: inline-block;
+            transition: background 0.2s;
+        }
+
+        .btn-hero:hover { background: #5a3e22; }
+
+        .hero-dots { display: flex; gap: 8px; margin-top: 2rem; }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+        }
+
+        .dot.active { background: #fff; }
+
+        .hero-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.25);
+            color: #fff;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: background 0.2s, transform 0.2s;
+            z-index: 10;
+            user-select: none;
+        }
+
+        .hero-arrow:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-50%) scale(1.08);
+        }
+
+        .hero-arrow-left  { left: 1.5rem; }
+        .hero-arrow-right { right: 1.5rem; }
+
+        #heroCarousel { position: relative; }
+
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .hero-image img {
+            max-height: 280px;
+            object-fit: contain;
+            border-radius: 16px;
+        }
+
+        .section-categorias,
+        .section-produtos {
+            padding: 4rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .section-header h2 { font-size: 1.6rem; font-weight: 700; }
+
+        .ver-todos {
+            border: 1px solid var(--text-color);
+            padding: 8px 20px;
+            font-size: 0.8rem;
+            text-decoration: none;
+            color: var(--text-color);
+            letter-spacing: 1px;
+            transition: all 0.2s;
+        }
+
+        .ver-todos:hover { background: var(--text-color); color: #fff; }
+
+        .categorias-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+
+        .categoria-card { text-decoration: none; color: var(--text-color); }
+
+        .categoria-img {
+            width: 100%;
+            aspect-ratio: 1;
+            overflow: hidden;
+            border-radius: 4px;
+            background: #f0ece8;
+            margin-bottom: 0.75rem;
+        }
+
+        .categoria-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .categoria-card:hover .categoria-img img { transform: scale(1.05); }
+        .categoria-nome { font-weight: 600; font-size: 0.95rem; display: block; }
+        .categoria-count { font-size: 0.8rem; color: #888; }
+
+
+        .play-btn {
+            width: 60px;
+            height: 60px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding-left: 4px;
+            transition: transform 0.2s;
+            border: none;
+        }
+
+        .play-btn:hover { transform: scale(1.1); }
+
+        .banner-right {
+            background: #f5f0eb;
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .banner-right h2 { font-size: 1.8rem; line-height: 1.3; font-weight: 700; }
+        .banner-right p { font-size: 0.85rem; color: #555; line-height: 1.7; }
+
+        .produtos-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+
+    script.
+        const FAVORITOS = new Set(!{favIds});
+
+        document.querySelectorAll('.produto-like').forEach(btn => {
+            if (FAVORITOS.has(btn.dataset.id)) {
+                btn.classList.add('ativo');
+            }
+        });
+
+        const heroSlides = [
+        {
+            background: 'linear-gradient(135deg, #1a1a1a 0%, #3a2e28 60%, #6b4f3a 100%)',
+            badge: 'Novidade',
+            title: 'Crie ambientes<br> que contam a sua história',
+            desc: 'Da sala ao quarto, encontre peças decorativas que tornam cada canto mais acolhedor, elegante e especial.',
+            btnText: 'Comprar agora',
+            btnHref: '/produtos',
+            img: !{img0}
+        },
+        {
+            background: 'linear-gradient(135deg, #2c3e50 0%, #3d5a47 60%, #4f7942 100%)',
+            badge: 'Coleção',
+            title: 'Decoração que<br>Conta Histórias',
+            desc: 'Cada peça é escolhida a pensar no seu espaço. Descubra a nossa coleção de jarras.',
+            btnText: 'Ver coleção',
+            btnHref: '/categoria/jarras',
+            img: !{img4}
+        },
+        {
+            background: 'linear-gradient(135deg, #3b2a4a 0%, #5a3e6b 60%, #7d5a8a 100%)',
+            badge: 'Destaque',
+            title: 'Arte em cada<br>Detalhe',
+            desc: 'Uma seleção de peças decorativas pensada para valorizar espaços com estilo, qualidade e originalidade.',
+            btnText: 'Explorar',
+            btnHref: '/produtos',
+            img: !{img6}
+        }
+        ];
+
+        let slideAtual = 0;
+        let intervaloCarrossel = null;
+
+        function irParaSlide(idx) {
+            const slide = heroSlides[idx];
+            const carousel = document.getElementById('heroCarousel');
+            const badge    = document.getElementById('heroBadge');
+            const title    = document.getElementById('heroTitle');
+            const desc     = document.getElementById('heroDesc');
+            const btn      = document.getElementById('heroBtn');
+            const img      = document.getElementById('heroImg');
+            const dots     = document.querySelectorAll('#heroDots .dot');
+
+            // Fade out
+            [badge, title, desc, btn, img].forEach(el => {
+                el.style.transition = 'opacity 0.4s ease';
+                el.style.opacity = '0';
+            });
+
+            setTimeout(() => {
+                // Atualizar conteúdo
+                carousel.style.background = slide.background;
+                badge.textContent = slide.badge;
+                title.innerHTML   = slide.title;
+                desc.textContent  = slide.desc;
+                btn.textContent   = slide.btnText;
+                btn.href          = slide.btnHref;
+                img.src = slide.img || '';
+
+                // Fade in
+                [badge, title, desc, btn, img].forEach(el => {
+                    el.style.opacity = '1';
+                });
+
+                // Dots
+                dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+
+                slideAtual = idx;
+            }, 400);
+        }
+
+        function avancarSlide() {
+            irParaSlide((slideAtual + 1) % heroSlides.length);
+        }
+
+        function iniciarCarrossel() {
+            intervaloCarrossel = setInterval(avancarSlide, 10000);
+        }
+
+        // Clicar num dot reinicia o timer
+        document.querySelectorAll('#heroDots .dot').forEach((dot, i) => {
+            dot.style.cursor = 'pointer';
+            dot.addEventListener('click', () => {
+                clearInterval(intervaloCarrossel);
+                irParaSlide(i);
+                iniciarCarrossel();
+            });
+        });
+
+        // Setas
+        document.getElementById('heroArrowLeft').addEventListener('click', () => {
+            clearInterval(intervaloCarrossel);
+            irParaSlide((slideAtual - 1 + heroSlides.length) % heroSlides.length);
+            iniciarCarrossel();
+        });
+
+        document.getElementById('heroArrowRight').addEventListener('click', () => {
+            clearInterval(intervaloCarrossel);
+            irParaSlide((slideAtual + 1) % heroSlides.length);
+            iniciarCarrossel();
+        });
+
+        iniciarCarrossel();

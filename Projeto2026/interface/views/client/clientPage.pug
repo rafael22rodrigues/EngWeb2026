@@ -1,0 +1,115 @@
+extends ../layout
+include ../../components/clientDataCard.pug
+include ../../components/historicoCard.pug
+
+block content
+  .client-page
+    aside.client-sidebar
+      img.client-avatar(src='/assets/profilePic.png', alt='Utilizador')
+      h2.client-hello Olá, #{user.nome}!
+
+      nav.client-nav
+        a#btn-compras(href='/perfil?tab=compras&page=1') AS MINHAS COMPRAS
+        a#btn-dados.active(href='/perfil') OS MEUS DADOS
+        a.logout(href='/logout') TERMINAR SESSÃO
+
+    section.client-content
+      #content-dados
+        +clientDataCard(
+          user.nome,
+          user.email,
+          user.telefone,
+          user.nif
+        )
+
+      #content-compras(style="display: none;")
+        +historicoCard(compras, comprasPagination)
+        
+  script.
+    const params = new URLSearchParams(window.location.search);
+    const tab = params.get('tab');
+
+    if (tab === 'compras') {
+      document.getElementById('content-dados').style.display = 'none';
+      document.getElementById('content-compras').style.display = 'block';
+
+      document.getElementById('btn-dados').classList.remove('active');
+      document.getElementById('btn-compras').classList.add('active');
+    } else {
+      document.getElementById('content-dados').style.display = 'block';
+      document.getElementById('content-compras').style.display = 'none';
+
+      document.getElementById('btn-dados').classList.add('active');
+      document.getElementById('btn-compras').classList.remove('active');
+    }
+  
+  style.
+    .client-page {
+      display: flex;
+      flex-direction: row;
+      gap: 250px;
+      justify-content: center;
+      align-items: start;
+      margin: 0 30px;
+    }
+
+    .client-sidebar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 100px;
+    }
+
+    .client-avatar {
+      width: 184px;
+      object-fit: contain;
+      margin-bottom: 24px;
+    }
+
+    .client-hello {
+      font-size: 24px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .client-nav {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+     .client-nav a {
+        text-decoration: none;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+        transition: color 0.2s ease;
+        color: #000000;
+        font-weight: 400;
+        cursor: pointer;
+      } 
+
+    .client-nav a:hover {
+      color: var(--button-hover);
+    }
+
+    .client-nav .active {
+      color: var(--button-bg) !important;
+      font-weight: 700;
+    }
+
+    .client-nav a.logout {
+      color: #000000;
+      font-weight: 900;
+      margin-top: 10px;
+    }
+
+    .client-content {
+      margin-top: 40px;
+    }
+
+    #content-dados, #content-compras {
+      width: 100%;
+      max-width: 700px;
+    }

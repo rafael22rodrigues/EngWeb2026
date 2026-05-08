@@ -1,0 +1,18 @@
+doctype html
+html
+  head
+    title DianaDecor
+    meta(charset='UTF-8')
+    link(rel='icon' href='/assets/logo.png')
+    link(rel='stylesheet' href='/stylesheets/style.css')
+    link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap")
+    link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Ubuntu')
+    script(src='https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js')
+    script(src='/javascript/utils.js')
+
+  body.layout
+    include ../components/sidebar
+    include ../components/navbar
+    main.content
+      block content
+    include ../components/footer

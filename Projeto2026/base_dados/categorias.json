@@ -1,0 +1,34 @@
+[
+    {
+      "_id": "jarras",
+      "label": "Jarras"
+    },
+    {
+      "_id": "objetos-decorativos",
+      "label": "Objetos Decorativos"
+    },
+    {
+      "_id": "porta-fotos",
+      "label": "Porta-Fotos"
+    },
+    {
+      "_id": "aparadores-consolas",
+      "label": "Aparadores e Consolas"
+    },
+    {
+      "_id": "floreiras",
+      "label": "Floreiras"
+    },
+    {
+      "_id": "almofadas",
+      "label": "Almofadas"
+    },
+    {
+      "_id": "toalheiros",
+      "label": "Toalheiros"
+    },
+    {
+      "_id": "orquideas",
+      "label": "Orquídeas"
+    }
+]

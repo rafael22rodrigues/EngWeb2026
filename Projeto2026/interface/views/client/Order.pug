@@ -1,0 +1,74 @@
+extends ../layout
+include ../../components/table.pug
+
+block content
+    main.page-shell
+        section.page-card
+            .top-card
+                .left
+                    h1 Encomenda Nr #{encomenda._id}
+                    h2 Estado: #{encomenda.estado}
+                    h2 Data da Encomenda: #{new Date(encomenda.data).toLocaleDateString('pt-PT')}
+                    h2 Valor Total: €#{encomenda.precoTotal.toFixed(2)}
+                .right
+                    h1 Dados do Cliente
+                    h2 Nome: #{cliente.nome}
+                    h2 Email: #{cliente.email}
+                    h2 Telefone: #{cliente.telefone}
+                    h2 NIF: #{cliente.nif}
+            .table-wrapper
+                +table(['Imagem', 'Produto', 'Cor', 'Tamanho', 'Tampa', 'Quantidade', 'Subtotal'], rows)
+
+    style.
+        .page-shell {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+        }
+
+        .page-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+            width: 80%;
+        }
+
+        .top-card {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            background-color: var(--form-bg);
+            font-family: "DM Sans";
+            opacity: 0.6;
+            width: 60%;
+            padding: 0 40px;
+            gap: 2px;
+        }
+
+        .top-card .left h1, .top-card .right h1 {
+            font-size: 18px;
+            margin-bottom: 0.5rem;
+        }
+
+        .top-card .left h2, .top-card .right h2 {
+            overflow: hidden;
+            color: #000;
+            leading-trim: both;
+            text-edge: cap;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-family: "DM Sans";
+            font-size: 15px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 26px;
+        }
+
+        .table-wrapper {
+            width: 100%;
+        }
+

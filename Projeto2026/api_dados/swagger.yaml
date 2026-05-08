@@ -1,0 +1,1040 @@
+openapi: 3.0.3
+info:
+  title: EW API de Dados
+  version: 1.0.0
+  description: API de dados para produtos, encomendas, cores e categorias.
+servers:
+  - url: http://localhost:7789
+    description: Servidor local de desenvolvimento
+
+tags:
+  - name: Produtos
+  - name: Encomendas
+  - name: Cores
+  - name: Categorias
+  - name: Carrinhos
+  - name: Wishlists
+
+paths:
+  /produtos:
+    get:
+      tags: [Produtos]
+      summary: Listar produtos
+      description: |
+        Lista produtos com filtros opcionais. Os filtros suportados incluem categoria, cor, tamanho,
+        intervalo de preço, pesquisa por nome, ordenação e paginação.
+      security: []
+      parameters:
+        - in: query
+          name: categoria
+          schema:
+            type: string
+          description: Identificador da categoria. O servidor normaliza o valor para formato com hífens.
+        - in: query
+          name: cor
+          schema:
+            type: string
+          description: Identificador da cor em hexadecimal armazenado em `opcoes.cores._id`.
+        - in: query
+          name: tamanho
+          schema:
+            type: string
+          description: Tamanho a procurar em `opcoes.tamanhos`.
+        - in: query
+          name: minPreco
+          schema:
+            type: number
+          description: Preço mínimo para filtrar variantes.
+        - in: query
+          name: maxPreco
+          schema:
+            type: number
+          description: Preço máximo para filtrar variantes.
+        - in: query
+          name: sort
+          schema:
+            type: string
+            enum: [preco_asc, preco_desc, nome_asc, nome_desc]
+          description: Ordenação por preço ou nome.
+        - in: query
+          name: search
+          schema:
+            type: string
+          description: Pesquisa parcial no nome do produto.
+        - in: query
+          name: page
+          schema:
+            type: integer
+            minimum: 1
+          description: Página da paginação.
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            minimum: 1
+          description: Número de registos por página.
+      responses:
+        '200':
+          description: Lista de produtos.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProdutosListResponse'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    post:
+      tags: [Produtos]
+      summary: Criar produto
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [produto]
+              properties:
+                produto:
+                  type: string
+                  description: JSON serializado com os dados do produto.
+      responses:
+        '201':
+          description: Produto criado com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Produto'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /produtos/stats:
+    get:
+      tags: [Produtos]
+      summary: Obter estatísticas de produtos
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Estatísticas agregadas dos produtos.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProdutoStats'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /produtos/{id}:
+    get:
+      tags: [Produtos]
+      summary: Obter produto por ID
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        '200':
+          description: Produto encontrado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Produto'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    put:
+      tags: [Produtos]
+      summary: Atualizar produto
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [produto]
+              properties:
+                produto:
+                  type: string
+                  description: JSON serializado com os dados atualizados do produto.
+      responses:
+        '200':
+          description: Produto atualizado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Produto'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    delete:
+      tags: [Produtos]
+      summary: Apagar produto
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        '200':
+          description: Produto removido.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /encomendas:
+    get:
+      tags: [Encomendas]
+      summary: Listar encomendas
+      description: |
+        Requer autenticação. Clientes só conseguem ver as próprias encomendas; administradores podem consultar todas.
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: userId
+          schema:
+            type: string
+          description: Filtra pelo utilizador. Para clientes, o servidor ignora este valor e usa o ID do token.
+        - in: query
+          name: estado
+          schema:
+            type: string
+            enum: [pendente, concluida, cancelada]
+        - in: query
+          name: dataInicio
+          schema:
+            type: string
+            format: date
+          description: Data inicial do intervalo.
+        - in: query
+          name: dataFim
+          schema:
+            type: string
+            format: date
+          description: Data final do intervalo.
+        - in: query
+          name: page
+          schema:
+            type: integer
+            minimum: 1
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            minimum: 1
+        - in: query
+          name: sort
+          schema:
+            type: string
+          description: Campo de ordenação passado diretamente para o Mongoose.
+      responses:
+        '200':
+          description: Lista de encomendas.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EncomendasListResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    post:
+      tags: [Encomendas]
+      summary: Criar encomenda
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EncomendaInput'
+      responses:
+        '201':
+          description: Encomenda criada com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Encomenda'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /encomendas/stats:
+    get:
+      tags: [Encomendas]
+      summary: Obter estatísticas de encomendas
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Estatísticas por estado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EncomendaStats'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /encomendas/{id}:
+    get:
+      tags: [Encomendas]
+      summary: Obter encomenda por ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        '200':
+          description: Encomenda encontrada.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Encomenda'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    put:
+      tags: [Encomendas]
+      summary: Atualizar encomenda
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EncomendaUpdate'
+      responses:
+        '200':
+          description: Encomenda atualizada.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Encomenda'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    delete:
+      tags: [Encomendas]
+      summary: Apagar encomenda
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        '200':
+          description: Encomenda removida.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /cores:
+    get:
+      tags: [Cores]
+      summary: Listar cores
+      security: []
+      responses:
+        '200':
+          description: Lista de cores.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Cor'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    post:
+      tags: [Cores]
+      summary: Criar cor
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CorInput'
+      responses:
+        '201':
+          description: Cor criada com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cor'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /cores/{id}:
+    delete:
+      tags: [Cores]
+      summary: Apagar cor
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        '200':
+          description: Cor removida.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /categorias:
+    get:
+      tags: [Categorias]
+      summary: Listar categorias
+      security: []
+      responses:
+        '200':
+          description: Lista de categorias.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Categoria'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    post:
+      tags: [Categorias]
+      summary: Criar categoria
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoriaInput'
+      responses:
+        '201':
+          description: Categoria criada com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Categoria'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /categorias/{id}:
+    delete:
+      tags: [Categorias]
+      summary: Apagar categoria
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        '200':
+          description: Categoria removida.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /carrinhos/{id}:
+    get:
+      tags: [Carrinhos]
+      summary: Obter carrinho por ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        '200':
+          description: Carrinho encontrado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Carrinho'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /carrinhos/{id}/produtos:
+    post:
+      tags: [Carrinhos]
+      summary: Adicionar produto ao carrinho
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CarrinhoProdutoInput'
+      responses:
+        '200':
+          description: Produto adicionado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Carrinho'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /carrinhos/{id}/produtos/{sku}:
+    delete:
+      tags: [Carrinhos]
+      summary: Remover produto do carrinho
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+        - in: path
+          name: sku
+          required: true
+          schema:
+            type: string
+          description: SKU da variante a remover do carrinho.
+      responses:
+        '200':
+          description: Produto removido do carrinho.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /wishlists/{id}:
+    get:
+      tags: [Wishlists]
+      summary: Obter wishlist por ID
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        '200':
+          description: Wishlist encontrada.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Wishlist'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /wishlists/{id}/produtos:
+    post:
+      tags: [Wishlists]
+      summary: Adicionar produto ao wishlist
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WishlistProdutoInput'
+      responses:
+        '200':
+          description: Produto adicionado ao wishlist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Wishlist'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /wishlists/{id}/produtos/{produtoId}:
+    delete:
+      tags: [Wishlists]
+      summary: Remover produto do wishlist
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+        - in: path
+          name: produtoId
+          required: true
+          schema:
+            type: string
+          description: Identificador do produto na coleção ou SKU.
+      responses:
+        '200':
+          description: Produto removido do wishlist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: |
+        O middleware aceita o token no header `Authorization: Bearer <token>`, cookie `token` ou query string `?token=`.
+
+  parameters:
+    IdPath:
+      in: path
+      name: id
+      required: true
+      schema:
+        type: string
+      description: Identificador MongoDB do recurso.
+
+  responses:
+    BadRequest:
+      description: Pedido inválido.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Não autenticado.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuthErrorResponse'
+    Forbidden:
+      description: Sem permissões para executar a operação.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuthErrorResponse'
+    NotFound:
+      description: Recurso não encontrado.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    ServerError:
+      description: Erro interno do servidor.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Produto not found
+        erro:
+          type: string
+          example: Token inválido ou expirado.
+
+    AuthErrorResponse:
+      type: object
+      properties:
+        erro:
+          type: string
+      example:
+        erro: Acesso negado. Requer permissão de administrador.
+
+    MessageResponse:
+      type: object
+      properties:
+        message:
+          type: string
+
+    ProdutoColorOption:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: Hex da cor.
+        label:
+          type: string
+        imagem:
+          type: string
+
+    ProdutoVariant:
+      type: object
+      properties:
+        sku:
+          type: string
+        preco:
+          type: number
+        stock:
+          type: integer
+        vendidos:
+          type: integer
+        atributos:
+          type: object
+          properties:
+            cor:
+              type: string
+            tamanho:
+              type: string
+            tampa:
+              type: string
+
+    ProdutoBase:
+      type: object
+      properties:
+        _id:
+          type: string
+        nome:
+          type: string
+        categoriaId:
+          type: string
+        imagemBase:
+          type: string
+        opcoes:
+          type: object
+          properties:
+            cores:
+              type: array
+              items:
+                $ref: '#/components/schemas/ProdutoColorOption'
+            tamanhos:
+              type: array
+              items:
+                type: string
+            tampas:
+              type: array
+              items:
+                type: string
+        variantes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProdutoVariant'
+
+    ProdutoInput:
+      allOf:
+        - $ref: '#/components/schemas/ProdutoBase'
+      required:
+        - nome
+        - categoriaId
+        - imagemBase
+
+    ProdutoUpdate:
+      allOf:
+        - $ref: '#/components/schemas/ProdutoBase'
+
+    Produto:
+      allOf:
+        - $ref: '#/components/schemas/ProdutoBase'
+
+    ProdutosListResponse:
+      type: object
+      properties:
+        produtos:
+          type: array
+          items:
+            $ref: '#/components/schemas/Produto'
+        total:
+          type: integer
+
+    ProdutoStats:
+      type: object
+      properties:
+        numProdutos:
+          type: integer
+        vendas:
+          type: integer
+        precoMedio:
+          type: string
+          example: '12.50'
+        faturacao:
+          type: string
+          example: '1450.00'
+
+    EncomendaItem:
+      type: object
+      properties:
+        produtoId:
+          type: string
+        varianteSku:
+          type: string
+        quantidade:
+          type: integer
+
+    EncomendaBase:
+      type: object
+      properties:
+        _id:
+          type: string
+        userId:
+          type: string
+        produtos:
+          type: array
+          items:
+            $ref: '#/components/schemas/EncomendaItem'
+        precoTotal:
+          type: number
+        data:
+          type: string
+          format: date-time
+        estado:
+          type: string
+          enum: [pendente, concluida, cancelada]
+
+    EncomendaInput:
+      allOf:
+        - $ref: '#/components/schemas/EncomendaBase'
+      required:
+        - userId
+        - produtos
+        - precoTotal
+
+    EncomendaUpdate:
+      allOf:
+        - $ref: '#/components/schemas/EncomendaBase'
+
+    Encomenda:
+      allOf:
+        - $ref: '#/components/schemas/EncomendaBase'
+
+    EncomendasListResponse:
+      type: object
+      properties:
+        encomendas:
+          type: array
+          items:
+            $ref: '#/components/schemas/Encomenda'
+        total:
+          type: integer
+
+    EncomendaStats:
+      type: object
+      properties:
+        concluidas:
+          type: integer
+        pendentes:
+          type: integer
+        canceladas:
+          type: integer
+        total:
+          type: integer
+
+    CorInput:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: Hex da cor.
+        label:
+          type: string
+      required:
+        - label
+
+    Cor:
+      type: object
+      properties:
+        _id:
+          type: string
+        label:
+          type: string
+
+    CategoriaInput:
+      type: object
+      properties:
+        _id:
+          type: string
+        label:
+          type: string
+      required:
+        - label
+
+    Categoria:
+      type: object
+      properties:
+        _id:
+          type: string
+        label:
+          type: string
+    CarrinhoItem:
+      type: object
+      properties:
+        produtoId:
+          type: string
+        sku:
+          type: string
+        quantidade:
+          type: integer
+
+    Carrinho:
+      type: object
+      properties:
+        _id:
+          type: string
+        userId:
+          type: string
+        produtos:
+          type: array
+          items:
+            $ref: '#/components/schemas/CarrinhoItem'
+        precoTotal:
+          type: number
+
+    CarrinhoInput:
+      type: object
+      properties:
+        userId:
+          type: string
+        produtos:
+          type: array
+          items:
+            $ref: '#/components/schemas/CarrinhoItem'
+      required:
+        - userId
+
+    CarrinhoProdutoInput:
+      type: object
+      properties:
+        produtoId:
+          type: string
+        sku:
+          type: string
+        quantidade:
+          type: integer
+      required:
+        - produtoId
+        - sku
+        - quantidade
+
+    WishlistItem:
+      type: object
+      properties:
+        produtoId:
+          type: string
+
+    Wishlist:
+      type: object
+      properties:
+        _id:
+          type: string
+        userId:
+          type: string
+        produtos:
+          type: array
+          items:
+            $ref: '#/components/schemas/WishlistItem'
+
+    WishlistInput:
+      type: object
+      properties:
+        userId:
+          type: string
+        produtos:
+          type: array
+          items:
+            $ref: '#/components/schemas/WishlistItem'
+      required:
+        - userId
+
+    WishlistProdutoInput:
+      type: object
+      properties:
+        produtoId:
+          type: string
+      required:
+        - produtoId

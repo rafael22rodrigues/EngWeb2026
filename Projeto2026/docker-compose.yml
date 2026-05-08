@@ -1,0 +1,66 @@
+services:
+  mongodb:
+    build:
+      context: ./base_dados
+      dockerfile: Dockerfile.mongo
+    container_name: mongodb_dianadecor
+    networks:
+      - dianadecor-network
+
+  api:
+    build: 
+      context: ./api_dados
+      dockerfile: Dockerfile 
+    container_name: api_dados
+    ports:
+      - "7789:7789"
+    environment:
+      - PORT=7789
+      - MONGO_URL=mongodb://mongodb:27017/dianadecor
+      - API_URL=http://localhost:7789
+    env_file:
+      - ./api_dados/.env
+    depends_on:
+      - mongodb
+    volumes:
+      - ./api_dados/public:/a/public
+    networks:
+      - dianadecor-network
+
+  auth:
+    build:
+      context: ./api_auth
+      dockerfile: Dockerfile
+    container_name: api_auth_dianadecor
+    env_file:
+      - ./api_auth/.env
+    ports:
+      - "7791:7791"
+    environment:
+      - PORT=7791
+      - MONGO_URL=mongodb://mongodb:27017/dianadecor
+    depends_on:
+      - mongodb
+    networks:
+      - dianadecor-network
+
+  interface:
+    build:
+      context: ./interface
+      dockerfile: Dockerfile # Dockerfile para este novo servidor
+    container_name: interface_web
+    env_file:
+      - ./interface/.env
+    ports:
+      - "7790:7790"
+    environment:
+      - API_URL=http://api_dados:7789
+      - AUTH_URL=http://api_auth_dianadecor:7791
+    depends_on:
+      - api
+    networks:
+      - dianadecor-network
+
+networks:
+  dianadecor-network:
+    driver: bridge

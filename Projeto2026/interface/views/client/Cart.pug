@@ -1,0 +1,257 @@
+extends ../layout
+include ../../components/resumoOrder.pug
+
+block content
+  .page
+    .left-section
+      h1 O Meu Carrinho
+      if produtos.length > 0
+        for item in produtos
+          .cart-item
+            img(src=item.imagem, alt=item.produto.nome style="width: 200px; height: 200px; object-fit: cover; min-width: 200px; min-height: 200px;")
+            .item-info
+              h2= item.produto.nome
+              .opcoes
+                if item.variante.atributos.cor
+                  .opcoes-item
+                    p.label-opcoes Cor:
+                    div.cor(style="background-color: " + item.variante.atributos.cor)
+                if item.variante.atributos.tamanho
+                  .opcoes-item
+                    p.label-opcoes Tamanho: 
+                    p= item.variante.atributos.tamanho
+                if item.variante.atributos.tampa
+                  .opcoes-item
+                    p.label-opcoes Tampa: 
+                    p= item.variante.atributos.tampa
+              .preco-quantidade-remover
+                .preco
+                  p#preco-label Preço: 
+                  p=item.variante.preco.toFixed(2) + '€'
+                div.quantidade
+                  p#quantidade-label Quantidade:
+                  button(type='submit' name='quantidade' 
+                        data-sku=item.variante.sku data-produto-id=item.produto._id data-stock=item.variante.stock
+                        onclick='updateQuantidade(this.dataset.sku, this.dataset.produtoId,  Number(this.dataset.stock), "-")') -
+                  input(type='text' value=item.quantidade readonly)
+                  button(type='submit' name='quantidade'
+                        data-sku=item.variante.sku data-produto-id=item.produto._id data-stock=item.variante.stock
+                        onclick='updateQuantidade(this.dataset.sku, this.dataset.produtoId, Number(this.dataset.stock), "+")') +
+
+                form(action='/carrinho/remover' method='POST')
+                  input(type='hidden' name='sku' value=item.variante.sku)
+                  button.remover-button(type='submit')
+                    img(src="/assets/delete-icon.svg" alt="Remover" style="width:16px;")
+                    span Remover
+      else
+        p O seu carrinho está vazio.
+    .right-section
+      if produtos.length > 0
+        +resumoOrder(totalProdutos, total)
+      else
+        +resumoOrder(totalProdutos, total, 'Carrinho vazio', '#', false, true)
+
+  style.
+    .page {
+      display: flex;
+      gap: 140px;
+      padding: 40px;
+      justify-content: center;
+    }
+    .cor {
+      width: 17px;
+      height: 17px;
+      border-radius: 50%;
+      border: 1px solid #000000;
+    }
+
+    .left-section {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      width: 820px;
+    }
+
+    .right-section {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      align-items: center;
+      margin-top: 50px;
+    }
+
+    .cart-item {
+      display: flex;
+      gap: 10px;
+      width: 500px;
+      padding: 10px 0px;
+      align-items: stretch;
+      width: 100%;
+      height: 200px;
+    }
+
+    .item-info {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding: 20px 40px 20px 20px;
+      height: 160px;
+      background: #F6F4F0;
+      width: 100%;
+    }
+
+    .item-info h2 {
+      margin: 0;
+      color: var(--main-color);
+      font-size: 20px;
+    }
+
+    .item-info h3 {
+      font-size: 26px;
+      margin: 0;
+      color: rgba(0, 0, 0, 0.6);
+    }
+
+    .opcoes {
+      display: flex;
+      gap: 20px;
+    }
+
+    .label-opcoes {
+      font-weight: 600;
+    }
+
+    .opcoes p {
+      margin: 0;
+      font-size: 17px;
+      color: rgba(51, 44, 44, 0.6);
+    }
+
+    .opcoes-item {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+      color: #382F28;
+    }
+
+    .opcoes-label {
+      font-weight: 600;
+    }
+
+    .preco-quantidade-remover {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    .preco-quantidade-remover p {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 400;
+    }
+
+    .preco-quantidade-remover div {
+      display: inline-flex;
+      gap: 5px;
+      align-items: center;
+    }
+
+    .quantidade {
+      display: inline-flex;
+      align-items: center;
+      gap: 0px;
+    }
+
+    .quantidade p {
+      margin: 0;
+      font-size: 16px;
+      margin-right: 5px;
+    }
+
+    .quantidade button {
+      width: 34px;
+      height: 34px;
+      background-color: var(--main-color);
+      border: none;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+      margin: 0px;
+    }
+    .quantidade button:hover {
+      background-color: var(--main-color-hover);
+    }
+
+    .quantidade button :disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+
+    .quantidade input {
+      width: 40px;
+      height: 30px;
+      text-align: center;
+      border: 1px solid var(--main-color);
+      font-size: 17px;
+      font-weight: 500;
+      margin: 0px;
+    }
+
+
+    .remover-button {
+      background-color: var(--main-color);
+      border: none;
+      color: white;
+      padding: 10px 15px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 500;
+      height: 34px;
+      gap: 5px;
+    }
+
+    .remover-button:hover {
+      background-color: var(--main-color-hover);
+    }
+
+    .preco {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 19px;
+      font-weight: 600;
+    }
+
+    #preco-label {
+      font-weight: 600;
+    }
+
+    #quantidade-label {
+      font-weight: 600;
+    }
+
+  script. 
+    function updateQuantidade(sku, produtoId, stock, acao) {
+      const input = event.target.closest('.quantidade').querySelector('input');
+      let quantidade = Number(input.value);
+
+      if (acao === '+') quantidade++;
+      else if (acao === '-') quantidade--;
+      
+      if(quantidade > 0 && quantidade <= stock) {
+        axios.post('/carrinho/adicionar', {
+          produtoId: produtoId,
+          quantidade: quantidade,
+          sku: sku
+        }).then(res => {
+            input.value = quantidade;
+        }).catch(error => {
+          console.error('Erro ao atualizar quantidade:', error);
+        });
+      }
+    }
